@@ -1,6 +1,6 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { COLORS } from '@lib/theme'
-import { DEMOS } from '@data/usecases'
+import { getMergedCategories } from '@lib/customFlows'
 import { DEFAULT_MODEL } from '@data/models'
 import { DEFAULT_ETL_CONFIG } from '@data/etlConfig'
 import { ConfigModal } from '@components/config/ConfigModal'
@@ -9,25 +9,41 @@ import { SubNavBar } from '@components/nav/SubNavBar'
 import { ArchitectureBar } from '@components/shared/ArchitectureBar'
 import { ErrorBoundary } from '@components/shared/ErrorBoundary'
 import { DemoPanel } from '@panels/DemoPanel'
+import { FlowManager } from '@components/flows/FlowManager'
 import type { AIModel, ETLConfig } from '@types/index'
 
-const FIRST_CATEGORY = Object.keys(DEMOS)[0]
-const FIRST_SUB = Object.keys(DEMOS[FIRST_CATEGORY].sub)[0]
-
 export default function App() {
+  const [flowVersion, setFlowVersion] = useState(0)
+  const allCategories = useMemo(() => getMergedCategories(), [flowVersion])
+
+  const FIRST_CATEGORY = Object.keys(allCategories)[0]
+  const FIRST_SUB = Object.keys(allCategories[FIRST_CATEGORY].sub)[0]
+
   const [category, setCategory] = useState(FIRST_CATEGORY)
   const [sub, setSub] = useState(FIRST_SUB)
   const [configOpen, setConfigOpen] = useState(false)
+  const [showFlowManager, setShowFlowManager] = useState(false)
   const [model, setModel] = useState<AIModel>(DEFAULT_MODEL)
   const [etlConfig, setEtlConfig] = useState<ETLConfig>(DEFAULT_ETL_CONFIG)
 
-  const cat = DEMOS[category]
+  // If current category/sub is removed after a flow deletion, fall back
+  useEffect(() => {
+    if (!allCategories[category]) {
+      const firstCat = Object.keys(allCategories)[0]
+      setCategory(firstCat)
+      setSub(Object.keys(allCategories[firstCat].sub)[0])
+    } else if (!allCategories[category]?.sub[sub]) {
+      setSub(Object.keys(allCategories[category].sub)[0])
+    }
+  }, [allCategories, category, sub])
+
+  const cat = allCategories[category] ?? allCategories[Object.keys(allCategories)[0]]
   const subCases = cat.sub
   const activeCase = subCases[sub] ?? Object.values(subCases)[0]
 
   const handleSetCategory = useCallback((key: string) => {
     setCategory(key)
-    setSub(Object.keys(DEMOS[key].sub)[0])
+    setSub(Object.keys(getMergedCategories()[key]?.sub ?? {})[0] ?? '')
   }, [])
 
   const handleSetSub = useCallback((key: string) => {
@@ -68,13 +84,23 @@ export default function App() {
         setEtlConfig={setEtlConfig}
       />
 
+      {showFlowManager && (
+        <FlowManager
+          onClose={() => {
+            setShowFlowManager(false)
+            setFlowVersion(v => v + 1)
+          }}
+        />
+      )}
+
       <TopNavBar
         category={category}
         setCategory={handleSetCategory}
         configOpen={configOpen}
         setConfigOpen={setConfigOpen}
+        onManageFlows={() => setShowFlowManager(true)}
         model={model}
-        categories={DEMOS}
+        categories={allCategories}
       />
 
       <SubNavBar

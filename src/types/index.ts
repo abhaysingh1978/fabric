@@ -15,6 +15,16 @@ export interface ETLConfig {
   streamProcessor: string
 }
 
+export interface DataSource {
+  id: string
+  name: string
+  type: string          // matches INFRA_DEFS key or sourceTypes id
+  flowId: string        // caseKey or 'global'
+  enabled: boolean
+  config: Record<string, string>
+  createdAt: string
+}
+
 export interface KPI {
   l: string
   v: string

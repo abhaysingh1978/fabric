@@ -9,10 +9,10 @@ export const AI_MODELS: { local: AIModel[]; cloud: AIModel[] } = {
     { id: 'phi4:14b',          name: 'Phi-4',         provider: 'Local', tag: '14B',  color: '#EC4899' },
   ],
   cloud: [
-    { id: 'claude-opus',    name: 'Claude Opus',    provider: 'Anthropic', tag: '4.6',    color: '#FF6B35' },
+    { id: 'claude-opus',    name: 'Claude Opus',    provider: 'Anthropic', tag: '4.7',    color: '#FF6B35' },
     { id: 'claude-sonnet',  name: 'Claude Sonnet',  provider: 'Anthropic', tag: '4.6',    color: '#FF8C61' },
-    { id: 'gemini-pro',     name: 'Gemini 2.0 Pro', provider: 'Google',    tag: 'Pro',    color: '#4285F4' },
-    { id: 'gemini-flash',   name: 'Gemini Flash',   provider: 'Google',    tag: '2.0',    color: '#34A853' },
+    { id: 'gemini-pro',     name: 'Gemini 2.5 Pro',   provider: 'Google', tag: '2.5',    color: '#4285F4' },
+    { id: 'gemini-flash',   name: 'Gemini 2.5 Flash', provider: 'Google', tag: '2.5',    color: '#34A853' },
     { id: 'gpt-4o',         name: 'GPT-4o',         provider: 'OpenAI',    tag: 'Latest', color: '#74AA9C' },
   ],
 }

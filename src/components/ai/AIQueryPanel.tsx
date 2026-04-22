@@ -2,6 +2,7 @@ import { useEffect, type KeyboardEvent } from 'react'
 import { COLORS } from '@lib/theme'
 import { useAIQuery } from '@hooks/useAIQuery'
 import { QUERY_PRESETS } from '@data/presets'
+import { getKey } from '@lib/apiKeys'
 import type { AIModel } from '@types/index'
 
 interface AIQueryPanelProps {
@@ -17,7 +18,7 @@ export function AIQueryPanel({ model, caseKey }: AIQueryPanelProps) {
   }, [caseKey, clearResponse])
 
   const presets = QUERY_PRESETS[caseKey] ?? []
-  const hasApiKey = !!import.meta.env.VITE_ANTHROPIC_API_KEY
+  const hasApiKey = !!getKey('anthropic') || !!getKey('google') || !!getKey('openai')
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') ask()

@@ -5,7 +5,8 @@ export const ETL_OPTIONS: Record<keyof ETLConfig, string[]> = {
   refreshInterval:  ['5', '15', '30', '60', '300'],
   parallelAgents:   ['2', '4', '8', '16', '32'],
   vectorStore:      ['Pinecone', 'Weaviate', 'Qdrant', 'Chroma', 'pgvector'],
-  dataWarehouse:    ['Snowflake', 'BigQuery', 'Redshift', 'Databricks', 'DuckDB'],
+  dataWarehouse:    ['Snowflake', 'BigQuery', 'Redshift', 'Databricks', 'DuckDB',
+                     'MySQL', 'SQL Server', 'Oracle', 'DB2', 'Sybase'],
   streamProcessor:  ['Kafka', 'Pulsar', 'Kinesis', 'Flink', 'Spark Streaming'],
 }
 

@@ -1,4 +1,5 @@
 import type { AIModel } from '@types/index'
+import { getKey } from '@lib/apiKeys'
 
 export interface AICompletionRequest {
   systemPrompt: string
@@ -11,39 +12,57 @@ export interface AICompletionResponse {
   error?: string
 }
 
-function formatError(err: unknown, provider: string): string {
-  if (err instanceof Response || (err && typeof err === 'object' && 'status' in err)) {
-    const status = (err as { status: number }).status
-    if (status === 401) return `Invalid API key for ${provider}. Check your .env configuration.`
-    if (status === 429) return `Rate limit reached for ${provider}. Please wait a moment and try again.`
+async function readErrorBody(res: Response): Promise<string> {
+  try {
+    const body = await res.json() as { error?: { message?: string }; message?: string }
+    return body?.error?.message ?? body?.message ?? res.statusText
+  } catch {
+    return res.statusText
   }
-  if (err instanceof TypeError && err.message.includes('fetch')) {
-    return `Network error reaching ${provider}. Check your internet connection.`
+}
+
+function formatError(err: unknown, provider: string): string {
+  if (err && typeof err === 'object' && 'status' in err) {
+    const status = (err as { status: number; body?: string }).status
+    const body = (err as { body?: string }).body ?? ''
+    if (status === 401) return `Invalid API key for ${provider}. Check your .env file.`
+    if (status === 429) return `Rate limit reached for ${provider}. Please wait and try again.`
+    if (status === 404) return `Model not found on ${provider}. ${body}`
+    if (body) return `${provider} error ${status}: ${body}`
+  }
+  if (err instanceof TypeError) {
+    return `Cannot reach ${provider} — check your network or CORS settings.`
   }
   return `${provider} request failed: ${err instanceof Error ? err.message : String(err)}`
 }
 
 async function callAnthropic(model: AIModel, req: AICompletionRequest): Promise<AICompletionResponse> {
+  // Map internal IDs → current Anthropic API model strings
   const modelMap: Record<string, string> = {
-    'claude-opus':   'claude-opus-4-20250514',
-    'claude-sonnet': 'claude-sonnet-4-20250514',
+    'claude-opus':   'claude-opus-4-7',
+    'claude-sonnet': 'claude-sonnet-4-6',
   }
   try {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
-        'x-api-key': import.meta.env.VITE_ANTHROPIC_API_KEY,
+        'x-api-key': getKey('anthropic'),
         'anthropic-version': '2023-06-01',
+        // Required for direct browser-to-API calls (bypasses CORS preflight block)
+        'anthropic-dangerous-direct-browser-access': 'true',
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        model: modelMap[model.id] ?? 'claude-sonnet-4-20250514',
+        model: modelMap[model.id] ?? 'claude-sonnet-4-6',
         max_tokens: req.maxTokens ?? 1024,
         system: req.systemPrompt,
         messages: [{ role: 'user', content: req.userMessage }],
       }),
     })
-    if (!res.ok) throw Object.assign(new Error(res.statusText), { status: res.status })
+    if (!res.ok) {
+      const body = await readErrorBody(res)
+      throw Object.assign(new Error(body), { status: res.status, body })
+    }
     const data = await res.json() as { content: Array<{ text: string }> }
     return { text: data.content[0].text }
   } catch (err) {
@@ -52,22 +71,36 @@ async function callAnthropic(model: AIModel, req: AICompletionRequest): Promise<
 }
 
 async function callGoogle(model: AIModel, req: AICompletionRequest): Promise<AICompletionResponse> {
-  const modelId = model.id === 'gemini-pro' ? 'gemini-2.0-pro' : 'gemini-2.0-flash'
+  const isPro = model.id === 'gemini-pro'
+  const modelId = isPro ? 'gemini-2.5-pro' : 'gemini-2.5-flash'
+  // gemini-2.5-pro is a thinking model; its reasoning budget counts against maxOutputTokens.
+  // 1024 is exhausted by the thinking trace alone — use 8192 minimum so the visible reply has room.
+  const maxOutputTokens = isPro ? Math.max(req.maxTokens ?? 0, 8192) : (req.maxTokens ?? 1024)
   try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${import.meta.env.VITE_GOOGLE_API_KEY}`
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${getKey('google')}`
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
         system_instruction: { parts: [{ text: req.systemPrompt }] },
         contents: [{ role: 'user', parts: [{ text: req.userMessage }] }],
-        generationConfig: { maxOutputTokens: req.maxTokens ?? 1024 },
+        generationConfig: { maxOutputTokens },
       }),
     })
-    if (!res.ok) throw Object.assign(new Error(res.statusText), { status: res.status })
-    const data = await res.json() as { candidates: Array<{ content: { parts: Array<{ text: string }> } }> }
-    return { text: data.candidates[0].content.parts[0].text }
+    if (!res.ok) {
+      const body = await readErrorBody(res)
+      throw Object.assign(new Error(body), { status: res.status, body })
+    }
+    const data = await res.json() as {
+      candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }>
+    }
+    // Thinking models (gemini-2.5-*) return multiple parts; join all text parts
+    const parts = data.candidates?.[0]?.content?.parts ?? []
+    const text = parts.flatMap(p => (p.text ? [p.text] : [])).join('')
+    if (!text) return { text: '', error: 'Google returned an empty response (possible safety filter).' }
+    return { text }
   } catch (err) {
+    if (err instanceof TypeError) return { text: '', error: 'Cannot reach Google — network error or invalid response.' }
     return { text: '', error: formatError(err, 'Google') }
   }
 }
@@ -77,7 +110,7 @@ async function callOpenAI(model: AIModel, req: AICompletionRequest): Promise<AIC
     const res = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${getKey('openai')}`,
         'content-type': 'application/json',
       },
       body: JSON.stringify({
@@ -89,7 +122,10 @@ async function callOpenAI(model: AIModel, req: AICompletionRequest): Promise<AIC
         ],
       }),
     })
-    if (!res.ok) throw Object.assign(new Error(res.statusText), { status: res.status })
+    if (!res.ok) {
+      const body = await readErrorBody(res)
+      throw Object.assign(new Error(body), { status: res.status, body })
+    }
     const data = await res.json() as { choices: Array<{ message: { content: string } }> }
     return { text: data.choices[0].message.content }
   } catch (err) {
@@ -98,7 +134,7 @@ async function callOpenAI(model: AIModel, req: AICompletionRequest): Promise<AIC
 }
 
 async function callOllama(model: AIModel, req: AICompletionRequest): Promise<AICompletionResponse> {
-  const base = import.meta.env.VITE_OLLAMA_BASE_URL || 'http://localhost:11434'
+  const base = getKey('ollama') || 'http://localhost:11434'
   try {
     await fetch(`${base}/api/version`, { method: 'HEAD', signal: AbortSignal.timeout(2000) })
   } catch {
@@ -114,7 +150,14 @@ async function callOllama(model: AIModel, req: AICompletionRequest): Promise<AIC
         stream: false,
       }),
     })
-    if (!res.ok) throw Object.assign(new Error(res.statusText), { status: res.status })
+    if (!res.ok) {
+      const body = await readErrorBody(res)
+      // Ollama 404 = model not downloaded yet
+      if (res.status === 404) {
+        return { text: '', error: `Model not downloaded. Run: ollama pull ${model.id}` }
+      }
+      throw Object.assign(new Error(body), { status: res.status, body })
+    }
     const data = await res.json() as { response: string }
     return { text: data.response }
   } catch (err) {

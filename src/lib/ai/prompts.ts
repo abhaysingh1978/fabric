@@ -20,6 +20,10 @@ Analyse market share shifts, pricing strategies, review sentiment, and channel p
 Provide comparative economic analysis grounded in IMF, World Bank, and central bank data. Highlight divergences in growth trajectories, inflation regimes, and structural vulnerabilities. Contextualise findings within 50-year historical trends and 5-year forecasts.`,
 }
 
+const GENERIC_PROMPT = `You are an intelligent data analyst and AI assistant. Provide clear, data-driven insights based on the available data sources and pipeline context.
+
+Analyse the data thoroughly, identify key trends and patterns, and deliver actionable recommendations. Structure your responses clearly with specific metrics and evidence where possible. Keep answers concise and focused on what is most useful for decision-making.`
+
 export function getSystemPrompt(caseKey: string): string {
-  return SYSTEM_PROMPTS[caseKey] ?? SYSTEM_PROMPTS.stock
+  return SYSTEM_PROMPTS[caseKey] ?? GENERIC_PROMPT
 }

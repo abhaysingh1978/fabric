@@ -8,11 +8,12 @@ interface TopNavBarProps {
   setCategory: (cat: string) => void
   configOpen: boolean
   setConfigOpen: (open: boolean) => void
+  onManageFlows: () => void
   model: AIModel
   categories: Record<string, Category>
 }
 
-export function TopNavBar({ category, setCategory, setConfigOpen, model, categories }: TopNavBarProps) {
+export function TopNavBar({ category, setCategory, setConfigOpen, onManageFlows, model, categories }: TopNavBarProps) {
   const handleCategoryClick = useCallback((key: string) => {
     setCategory(key)
   }, [setCategory])
@@ -82,7 +83,7 @@ export function TopNavBar({ category, setCategory, setConfigOpen, model, categor
         })}
       </div>
 
-      {/* Right: model + config */}
+      {/* Right: model + flows + config */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'monospace', fontSize: 10 }}>
           <div style={{
@@ -93,6 +94,19 @@ export function TopNavBar({ category, setCategory, setConfigOpen, model, categor
           <span style={{ color: model.color, fontWeight: 700 }}>{model.name}</span>
           <span style={{ color: COLORS.textMuted }}>· {model.tag}</span>
         </div>
+        <button
+          onClick={onManageFlows}
+          style={{
+            fontFamily: 'monospace', fontSize: 10, fontWeight: 700,
+            color: COLORS.accent2,
+            background: `${COLORS.accent2}12`,
+            border: `1px solid ${COLORS.accent2}44`,
+            borderRadius: 6, padding: '5px 12px',
+            cursor: 'pointer', transition: 'all 0.15s',
+          }}
+        >
+          ⊕ Flows
+        </button>
         <button
           onClick={() => setConfigOpen(true)}
           style={{
