@@ -1,6 +1,6 @@
 # Business Requirements Document (BRD)
 
-**Project:** Fabric — Agentic ETL, AI & Multi-Agent Platform  
+**Project:** Aethon — Agentic ETL, AI & Multi-Agent Platform  
 **Version:** 2.0.0  
 **Status:** Approved  
 **Prepared by:** Technology Consulting Practice  
@@ -27,7 +27,7 @@
 
 ## 1. Executive Summary
 
-**Fabric** is a flagship client-facing demonstration and production-ready platform built by our Technology Consulting Practice to showcase enterprise-grade capabilities across:
+**Aethon** is a flagship client-facing demonstration and production-ready platform built by our Technology Consulting Practice to showcase enterprise-grade capabilities across:
 
 - **High-volume, complex ETL pipelines** with multi-stage orchestration
 - **Modern real-time dashboarding** and reporting
@@ -69,7 +69,7 @@ Sales and pre-sales cycles suffer from the following pain points:
 
 ### 2.3 Opportunity
 
-A single, high-quality, configurable demo platform — **Fabric v2** — addresses all of the above. It compresses pre-sales cycles, demonstrates technical depth, allows consultants to onboard new industry domains without engineering, and shows real connector configuration depth to technically sophisticated buyers.
+A single, high-quality, configurable demo platform — **Aethon v2** — addresses all of the above. It compresses pre-sales cycles, demonstrates technical depth, allows consultants to onboard new industry domains without engineering, and shows real connector configuration depth to technically sophisticated buyers.
 
 ---
 
@@ -235,7 +235,7 @@ Pre-sales consultants can create new domains via the Flow Manager without engine
 | Criterion | Measurement | Target |
 |---|---|---|
 | Demo preparation time | Average hours from request to demo-ready | ≤ 4 hours |
-| Demo-to-proposal conversion | % of demos resulting in proposal request | +25% vs pre-Fabric baseline |
+| Demo-to-proposal conversion | % of demos resulting in proposal request | +25% vs pre-Aethon baseline |
 | New domain onboarding | Time for consultant to create new flow via UI | ≤ 30 minutes |
 | Platform reliability | Demo sessions with zero technical failures | ≥ 95% |
 | AI response quality | Facilitator satisfaction rating (1–5) | ≥ 4.2/5 |

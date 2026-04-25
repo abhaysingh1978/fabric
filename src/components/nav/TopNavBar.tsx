@@ -40,7 +40,7 @@ export function TopNavBar({ category, setCategory, setConfigOpen, onManageFlows,
           fontSize: 14, color: '#fff', fontWeight: 900,
         }}>◈</div>
         <div>
-          <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 900, color: COLORS.text, letterSpacing: '0.12em' }}>FABRIC</div>
+          <div style={{ fontFamily: 'monospace', fontSize: 13, fontWeight: 900, color: COLORS.text, letterSpacing: '0.12em' }}>AETHON</div>
           <div style={{ fontFamily: 'monospace', fontSize: 8, color: COLORS.textMuted, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
             ETL · AI · MULTI-AGENT PLATFORM
           </div>

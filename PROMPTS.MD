@@ -1,4 +1,4 @@
-# Fabric — Implementation Prompts
+# Aethon — Implementation Prompts
 **Complete AI-Assisted Development Prompt Library**
 Version: 1.0.0 | April 2026
 
@@ -31,7 +31,7 @@ Each prompt is self-contained and builds on the previous phase.
 ### Prompt 1 — Init
 
 ```
-Create a new React 18 + TypeScript 5 + Vite 5 project called "fabric".
+Create a new React 18 + TypeScript 5 + Vite 5 project called "aethon".
 Install dependencies: react, react-dom, typescript. No CSS frameworks,
 no UI libraries. Configure tsconfig with strict mode, path aliases
 (@components, @data, @lib, @hooks, @types). Create the folder structure
@@ -519,7 +519,7 @@ Create src/components/nav/TopNavBar.tsx
 Props: category, setCategory (+ sub reset), configOpen, setConfigOpen, model, categories
 
 Renders sticky top bar (54px height, dark background, border-bottom, z-index 100):
-- Left: Fabric logo mark (28px gradient square ◈) + "FABRIC" title + subtitle
+- Left: Aethon logo mark (28px gradient square ◈) + "AETHON" title + subtitle
   "ETL · AI · MULTI-AGENT PLATFORM" in 8px muted uppercase
 - Center: Category tab buttons (BFSI, Sales, Economy) with category icons.
   Active tab: coloured bg + coloured border. Hover: subtle bg tint.
@@ -646,7 +646,7 @@ Jobs:
 
 4. docker-build (only on push to main):
    - Build Docker image
-   - Tag as fabric:latest and fabric:{github.sha}
+   - Tag as aethon:latest and aethon:{github.sha}
    - Push to GitHub Container Registry (ghcr.io)
 
 All jobs use npm ci (not npm install) for reproducible installs.
@@ -720,7 +720,7 @@ src/components/ai/__tests__/AIQueryPanel.test.tsx:
 ### Prompt 26 — Performance Optimisation
 
 ```
-Audit and optimise the Fabric React app for demo performance:
+Audit and optimise the Aethon React app for demo performance:
 
 1. Wrap all chart data generation in useMemo with stable seeds
    (not Math.random() on every render — initialise once on mount).
@@ -747,7 +747,7 @@ Target: zero React re-renders of chart components during active pipeline run.
 ### Prompt 27 — Error Boundaries & Graceful Degradation
 
 ```
-Add production-quality error handling to Fabric:
+Add production-quality error handling to Aethon:
 
 1. Create src/components/shared/ErrorBoundary.tsx — a React class component
    error boundary. On error: show a dark card with "Something went wrong" message,
@@ -768,7 +768,7 @@ Add production-quality error handling to Fabric:
    without waiting for the full timeout.
 
 6. Add a global window.onerror handler in main.tsx that logs errors
-   with context { app: "fabric", version: VITE_APP_VERSION }.
+   with context { app: "aethon", version: VITE_APP_VERSION }.
 ```
 
 ---
@@ -818,7 +818,7 @@ keep everything else identical."`
 
 **Adding a new use case later:**
 ```
-Using the existing Fabric codebase, add a new use case to the BFSI category:
+Using the existing Aethon codebase, add a new use case to the BFSI category:
 
 Key: "insurance"
 Label: "Insurance Risk Analytics"
@@ -840,5 +840,5 @@ and Windsurf. For Cursor, prefix each prompt with `@codebase` to give it full co
 
 ---
 
-*Fabric Implementation Prompts v1.0.0 · April 2026*
+*Aethon Implementation Prompts v1.0.0 · April 2026*
 *Technology Consulting Practice*

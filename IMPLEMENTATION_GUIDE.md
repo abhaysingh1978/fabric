@@ -1,6 +1,6 @@
 # Implementation Guide & Developer Runbook
 
-**Project:** Fabric — Agentic ETL, AI & Multi-Agent Platform  
+**Project:** Aethon — Agentic ETL, AI & Multi-Agent Platform  
 **Version:** 2.0.0  
 **Date:** April 2026  
 
@@ -27,7 +27,7 @@
 ## 1. Repository Structure
 
 ```
-fabric/
+aethon/
 ├── README.md
 ├── BRD.md
 ├── FRD.md
@@ -222,8 +222,8 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ```bash
 # Build and run
-docker build -t fabric:latest .
-docker run -p 3000:80 fabric:latest
+docker build -t aethon:latest .
+docker run -p 3000:80 aethon:latest
 # → http://localhost:3000
 ```
 
@@ -231,7 +231,7 @@ Pass API keys at runtime (they can also be entered via the UI):
 ```bash
 docker run -p 3000:80 \
   -e VITE_ANTHROPIC_API_KEY=sk-ant-... \
-  fabric:latest
+  aethon:latest
 ```
 
 ---
@@ -342,7 +342,7 @@ The category badge and `BFSI · BFSI` label appear at the top of the editor to c
 
 **Reset to Default:** If a flow has been edited, a **↺ Reset to Default** button appears at the bottom of the editor. Clicking it removes the override and restores the original DEMOS values.
 
-Overrides are stored in `fabric_flow_overrides` in localStorage and applied non-destructively at render time. The source `DEMOS` object is never mutated.
+Overrides are stored in `aethon_flow_overrides` in localStorage and applied non-destructively at render time. The source `DEMOS` object is never mutated.
 
 ---
 
@@ -478,14 +478,14 @@ Then tag catalog items with `domains: ['newdomain']`.
 
 | Key | Type | Contents |
 |---|---|---|
-| `fabric_key_anthropic` | `string` | Anthropic API key |
-| `fabric_key_google` | `string` | Google AI API key |
-| `fabric_key_openai` | `string` | OpenAI API key |
-| `fabric_key_ollama` | `string` | Ollama base URL |
-| `fabric_infra_<service_lc>` | `Record<string,string>` | InfraWizard field values for service |
-| `fabric_ds_<flowId>` | `DataSource[]` | Data sources for a given flow |
-| `fabric_custom_flows` | `StoredFlow[]` | All custom flows |
-| `fabric_flow_overrides` | `FlowOverride[]` | Built-in flow overrides |
+| `aethon_key_anthropic` | `string` | Anthropic API key |
+| `aethon_key_google` | `string` | Google AI API key |
+| `aethon_key_openai` | `string` | OpenAI API key |
+| `aethon_key_ollama` | `string` | Ollama base URL |
+| `aethon_infra_<service_lc>` | `Record<string,string>` | InfraWizard field values for service |
+| `aethon_ds_<flowId>` | `DataSource[]` | Data sources for a given flow |
+| `aethon_custom_flows` | `StoredFlow[]` | All custom flows |
+| `aethon_flow_overrides` | `FlowOverride[]` | Built-in flow overrides |
 
 To inspect in Chrome DevTools:
 ```
@@ -495,7 +495,7 @@ Application → Storage → Local Storage → http://localhost:5173
 To reset everything (nuclear option):
 ```javascript
 Object.keys(localStorage)
-  .filter(k => k.startsWith('fabric_'))
+  .filter(k => k.startsWith('aethon_'))
   .forEach(k => localStorage.removeItem(k))
 ```
 
@@ -505,7 +505,7 @@ Object.keys(localStorage)
 
 ### Pre-Demo Checklist
 
-- [ ] Open Fabric in Chrome, full screen (F11 or View → Enter Full Screen)
+- [ ] Open Aethon in Chrome, full screen (F11 or View → Enter Full Screen)
 - [ ] Verify API key is set: Config → API Keys → test one query
 - [ ] If using local models: confirm `ollama serve` is running; select the model in Config
 - [ ] Set desired model in Config before the client enters
@@ -516,7 +516,7 @@ Object.keys(localStorage)
 
 | Time | Action | Talking Point |
 |---|---|---|
-| 0–2 min | Overview of Fabric landing — BFSI tab active | "This is our unified agentic data platform — three verticals out of the box, and you can add any domain in minutes." |
+| 0–2 min | Overview of Aethon landing — BFSI tab active | "This is our unified agentic data platform — three verticals out of the box, and you can add any domain in minutes." |
 | 2–4 min | BFSI → Stock Analysis → ▶ Run Pipeline | "Watch 100K market records flow through 6 ETL stages — extract, validate, transform, aggregate, load, and vector index." |
 | 4–5 min | Point to Agent Framework | "Five specialised agents communicating in real time via A2A — Technical Analysis feeding Risk, Sentiment feeding the Report agent." |
 | 5–7 min | Click AI preset query | "Now I'll query the AI layer — it's context-aware for this domain, connected to the active pipeline state." |
@@ -546,7 +546,7 @@ Object.keys(localStorage)
 | Blank screen on load | Build error | `npm run build` → check for TypeScript errors |
 | Charts not rendering | SVG/browser issue | Use Chrome 110+; check console for errors |
 | CORS error on AI call | API key or CSP issue | Check API key is valid; check browser extensions blocking requests |
-| localStorage full | Too many sources/flows | Clear stale `fabric_ds_*` keys via DevTools |
+| localStorage full | Too many sources/flows | Clear stale `aethon_ds_*` keys via DevTools |
 
 ---
 

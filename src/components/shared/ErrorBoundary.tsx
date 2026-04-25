@@ -18,7 +18,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    console.error('[Fabric ErrorBoundary]', error, info.componentStack)
+    console.error('[Aethon ErrorBoundary]', error, info.componentStack)
   }
 
   render() {

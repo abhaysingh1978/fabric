@@ -1,6 +1,6 @@
 # Functional Requirements Document (FRD)
 
-**Project:** Fabric — Agentic ETL, AI & Multi-Agent Platform  
+**Project:** Aethon — Agentic ETL, AI & Multi-Agent Platform  
 **Version:** 2.0.0  
 **Status:** Approved  
 **Prepared by:** Technology Consulting Practice  
@@ -32,11 +32,11 @@
 
 ## 1. System Overview
 
-Fabric is a single-page application (SPA) with a component-driven React architecture. It consists of eight primary functional modules:
+Aethon is a single-page application (SPA) with a component-driven React architecture. It consists of eight primary functional modules:
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│                           FABRIC SPA                                 │
+│                           AETHON SPA                                 │
 │                                                                      │
 │  ┌───────────────────────────────────────────────────────────────┐   │
 │  │  TopNavBar: Logo | Category Tabs | ⊕ Flows | ⚙ Config        │   │
@@ -90,7 +90,7 @@ All interactive users are treated as Demo Facilitators. No authentication is req
 ### Module 1: Navigation
 
 **FM-NAV-01: Top Navigation Bar**
-- Displays Fabric logo and brand identity (top-left)
+- Displays Aethon logo and brand identity (top-left)
 - Renders category tabs from the merged category tree (built-in + custom flows)
 - Displays active AI model indicator (top-right): name, provider tag, colour pulse dot
 - Renders **⊕ Flows** button (opens Flow Manager, orange accent)
@@ -115,7 +115,7 @@ All interactive users are treated as Demo Facilitators. No authentication is req
 - Four provider rows: Anthropic, Google AI, OpenAI, Ollama URL
 - Each row: colour-coded status dot · masked input · show/hide toggle · clear button
 - Input border highlights in provider colour on focus
-- Keys persisted to `localStorage` (`fabric_key_*`) on Save
+- Keys persisted to `localStorage` (`aethon_key_*`) on Save
 - Env vars (`.env`) used as fallback if localStorage key absent
 - **? How to get keys** button opens ProviderSetupGuide at Anthropic tab
 
@@ -266,7 +266,7 @@ Each provider has 3–4 sections:
 
 ## 5. Navigation & Routing
 
-Fabric is a single-page application. All navigation is state-driven (no URL routing in v2).
+Aethon is a single-page application. All navigation is state-driven (no URL routing in v2).
 
 ```typescript
 // Core navigation state in App.tsx
@@ -355,7 +355,7 @@ interface DataSource {
 }
 ```
 
-Storage key pattern: `fabric_ds_<flowId>` in localStorage.
+Storage key pattern: `aethon_ds_<flowId>` in localStorage.
 
 ### 6.6 Custom Flow
 
@@ -377,7 +377,7 @@ interface StoredFlow {
 }
 ```
 
-Storage key: `fabric_custom_flows` in localStorage.
+Storage key: `aethon_custom_flows` in localStorage.
 
 ### 6.7 Flow Override (Built-in Editing)
 
@@ -394,7 +394,7 @@ interface FlowOverride {
 }
 ```
 
-Storage key: `fabric_flow_overrides` in localStorage.
+Storage key: `aethon_flow_overrides` in localStorage.
 
 ---
 
@@ -519,14 +519,14 @@ A2A messages are visualised as animated indicators in the Agent Framework Panel.
 
 | Key Pattern | Contents |
 |---|---|
-| `fabric_key_anthropic` | Anthropic API key |
-| `fabric_key_google` | Google AI API key |
-| `fabric_key_openai` | OpenAI API key |
-| `fabric_key_ollama` | Ollama base URL |
-| `fabric_infra_<service>` | InfraWizard values for a given service |
-| `fabric_ds_<flowId>` | DataSource[] array for a given flow |
-| `fabric_custom_flows` | StoredFlow[] array of custom flows |
-| `fabric_flow_overrides` | FlowOverride[] array of built-in flow edits |
+| `aethon_key_anthropic` | Anthropic API key |
+| `aethon_key_google` | Google AI API key |
+| `aethon_key_openai` | OpenAI API key |
+| `aethon_key_ollama` | Ollama base URL |
+| `aethon_infra_<service>` | InfraWizard values for a given service |
+| `aethon_ds_<flowId>` | DataSource[] array for a given flow |
+| `aethon_custom_flows` | StoredFlow[] array of custom flows |
+| `aethon_flow_overrides` | FlowOverride[] array of built-in flow edits |
 
 ### 10.2 Default Configuration
 
@@ -624,7 +624,7 @@ Scoring: each catalog item (120 datasets, 100 agents) is scored by counting doma
 
 | Action | Behaviour |
 |---|---|
-| Create | Generates unique `flowKey` and `caseKey` (slug + timestamp suffix); saves to `fabric_custom_flows` |
+| Create | Generates unique `flowKey` and `caseKey` (slug + timestamp suffix); saves to `aethon_custom_flows` |
 | Edit | Overwrites the existing entry by `caseKey` |
 | Delete | Removes entry; if active, App falls back to first available category/sub |
 | Navigate | FlowManager close increments `flowVersion`; App recomputes `allCategories` |
@@ -660,7 +660,7 @@ Scoring: each catalog item (120 datasets, 100 agents) is scored by counting doma
 3. User selects a source type
 4. If `hasWizard: false` → `NameDialog` captures a name; source added immediately
 5. If `hasWizard: true` → `InfraWizard` opens in controlled mode with `onSave` callback
-6. On wizard save, source saved to `fabric_ds_<flowId>` in localStorage
+6. On wizard save, source saved to `aethon_ds_<flowId>` in localStorage
 
 ### 12.4 Source Card
 
@@ -677,7 +677,7 @@ Each configured source displays:
 
 ### 13.1 Wizard Modes
 
-**Global mode** (from Config ETL Infrastructure section): saves to `fabric_infra_<service>`.
+**Global mode** (from Config ETL Infrastructure section): saves to `aethon_infra_<service>`.
 
 **Controlled mode** (from DataSourceManager): accepts `initialValues` prop and `onSave` callback; does not write to global infra storage.
 

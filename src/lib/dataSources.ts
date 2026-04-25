@@ -1,6 +1,6 @@
 import type { DataSource } from '@types/index'
 
-const PREFIX = 'fabric_ds_'
+const PREFIX = 'aethon_ds_'
 
 function key(flowId: string): string {
   return PREFIX + flowId.replace(/[^a-z0-9_]/gi, '_').toLowerCase()

@@ -1,8 +1,8 @@
 import { DEMOS } from '@data/usecases'
 import type { Category, KPI, UseCase } from '@types/index'
 
-const STORAGE_KEY   = 'fabric_custom_flows'
-const OVERRIDES_KEY = 'fabric_flow_overrides'
+const STORAGE_KEY   = 'aethon_custom_flows'
+const OVERRIDES_KEY = 'aethon_flow_overrides'
 
 // ── Custom flows ──────────────────────────────────────────────────────────────
 

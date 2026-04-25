@@ -1,6 +1,6 @@
 # Data Dictionary
 
-**Project:** Fabric — Agentic ETL, AI & Reporting Platform
+**Project:** Aethon — Agentic ETL, AI & Reporting Platform
 **Version:** 1.0.0
 **Date:** April 2026
 

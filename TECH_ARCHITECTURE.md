@@ -1,6 +1,6 @@
 # Technical Architecture Document
 
-**Project:** Fabric — Agentic ETL, AI & Reporting Platform
+**Project:** Aethon — Agentic ETL, AI & Reporting Platform
 **Version:** 1.0.0
 **Status:** Approved for Development
 **Architect:** Technology Consulting Practice — Architecture Guild
@@ -36,7 +36,7 @@
 │                                                                      │
 │   Browser (Chrome / Edge / Firefox / Safari)                        │
 │   ┌────────────────────────────────────────────────────────────┐    │
-│   │                   Fabric SPA (React)                       │    │
+│   │                   Aethon SPA (React)                       │    │
 │   │  ┌──────────┐ ┌─────────────┐ ┌───────────┐ ┌──────────┐ │    │
 │   │  │ Nav &    │ │ Config      │ │ Demo      │ │ AI Query │ │    │
 │   │  │ Routing  │ │ Module      │ │ Panels    │ │ Panel    │ │    │
@@ -145,7 +145,7 @@ App
 │   ├── ModelSelector (Local / Cloud groups)
 │   └── ETLConfigPanel (6 dropdowns)
 ├── TopNavBar
-│   ├── FabricLogo
+│   ├── AethonLogo
 │   ├── CategoryTabs [BFSI | Sales | Economy]
 │   ├── ActiveModelBadge
 │   └── ConfigButton
@@ -228,7 +228,7 @@ function startPipeline() {
 
 ### 4.1 Pipeline Stage Design
 
-Each ETL stage in Fabric corresponds to a real production pattern:
+Each ETL stage in Aethon corresponds to a real production pattern:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -287,11 +287,11 @@ S3 Raw Lake    ◄──                                     gRPC
 
 ### 5.1 Agent Design Pattern
 
-Each Fabric agent follows the **Observe-Reason-Act** pattern:
+Each Aethon agent follows the **Observe-Reason-Act** pattern:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   FABRIC AGENT                       │
+│                   AETHON AGENT                       │
 │                                                     │
 │  ┌─────────┐   ┌──────────┐   ┌──────────────────┐ │
 │  │ Observe │──►│  Reason  │──►│      Act         │ │
@@ -408,7 +408,7 @@ function getProvider(model: AIModel): AIProvider {
 User's Machine
 ┌────────────────────────────────────────┐
 │                                        │
-│  Browser (Fabric SPA)                  │
+│  Browser (Aethon SPA)                  │
 │  └── fetch("http://localhost:11434")   │
 │                │                       │
 │                ▼                       │
@@ -532,7 +532,7 @@ Document = {
 ```yaml
 # docker-compose.yml
 services:
-  fabric-app:
+  aethon-app:
     build: .
     ports: ["3000:80"]
     environment:
@@ -559,7 +559,7 @@ services:
 │                    PRODUCTION KUBERNETES                      │
 │                                                             │
 │  ┌─────────────┐  ┌──────────────┐  ┌───────────────────┐  │
-│  │  Nginx      │  │  Fabric App  │  │  Agent Pods       │  │
+│  │  Nginx      │  │  Aethon App  │  │  Agent Pods       │  │
 │  │  Ingress    │→ │  (3 replicas)│  │  (per-agent       │  │
 │  │  + TLS      │  │              │  │   deployments)    │  │
 │  └─────────────┘  └──────────────┘  └───────────────────┘  │
@@ -627,8 +627,8 @@ npm run dev                    # Vite dev server → http://localhost:5173
 ```bash
 npm run build                  # Outputs to /dist
 npm run preview                # Preview production build locally
-docker build -t fabric:latest .
-docker run -p 3000:80 fabric:latest
+docker build -t aethon:latest .
+docker run -p 3000:80 aethon:latest
 ```
 
 ### 10.3 CI/CD Pipeline
@@ -655,9 +655,9 @@ jobs:
 | Environment | URL | AI Models | Data |
 |---|---|---|---|
 | local-dev | localhost:5173 | All (requires keys) | Simulated |
-| demo-hosted | demo.fabric.yourco.com | All (keys in env) | Simulated |
-| client-poc | client.fabric.yourco.com | Configured per client | Simulated + optional live |
-| production | app.fabric.yourco.com | All | Live |
+| demo-hosted | demo.aethon.yourco.com | All (keys in env) | Simulated |
+| client-poc | client.aethon.yourco.com | Configured per client | Simulated + optional live |
+| production | app.aethon.yourco.com | All | Live |
 
 ---
 
@@ -698,7 +698,7 @@ jobs:
 ```typescript
 // Error boundary + telemetry
 window.onerror = (msg, src, line, col, err) => {
-  telemetry.captureException(err, { context: "fabric-spa" });
+  telemetry.captureException(err, { context: "aethon-spa" });
 };
 
 // Performance marks
@@ -721,13 +721,13 @@ performance.measure("pipeline-duration", "pipeline-start");
 ### 12.3 Key Metrics to Monitor
 
 ```
-fabric.pipeline.records_processed    (counter)
-fabric.pipeline.stage_latency_ms     (histogram, by stage)
-fabric.agent.messages_sent           (counter, by agent)
-fabric.agent.a2a_latency_ms          (histogram)
-fabric.ai.query_latency_ms           (histogram, by model)
-fabric.ai.error_rate                 (gauge)
-fabric.ui.page_load_ms               (histogram)
+aethon.pipeline.records_processed    (counter)
+aethon.pipeline.stage_latency_ms     (histogram, by stage)
+aethon.agent.messages_sent           (counter, by agent)
+aethon.agent.a2a_latency_ms          (histogram)
+aethon.ai.query_latency_ms           (histogram, by model)
+aethon.ai.error_rate                 (gauge)
+aethon.ui.page_load_ms               (histogram)
 ```
 
 ---

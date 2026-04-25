@@ -33,7 +33,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     fields: [
       { key: 'apiKey',      label: 'API Key',     placeholder: 'pcsk_…',            type: 'password', section: 'Authentication', hint: 'app.pinecone.io → API Keys → Create API Key' },
       { key: 'environment', label: 'Environment', placeholder: 'us-east-1-aws',     type: 'text',     section: 'Connection',     hint: 'Shown on your index detail page (e.g. us-east-1-aws)' },
-      { key: 'indexName',   label: 'Index Name',  placeholder: 'fabric-embeddings', type: 'text',     section: 'Index',          hint: 'Create via Indexes → Create Index in the console' },
+      { key: 'indexName',   label: 'Index Name',  placeholder: 'aethon-embeddings', type: 'text',     section: 'Index',          hint: 'Create via Indexes → Create Index in the console' },
       { key: 'dimensions',  label: 'Dimensions',  placeholder: '1536',              type: 'number',   section: 'Index',          hint: 'Must match your embedding model (OpenAI ada-002 = 1536)' },
       { key: 'metric',      label: 'Metric',      placeholder: '',  type: 'select', options: ['cosine','euclidean','dotproduct'], section: 'Index', hint: 'cosine recommended for text embeddings' },
       { key: 'podType',     label: 'Pod Type',    placeholder: '',  type: 'select', options: ['starter','p1.x1','p1.x2','p2.x1','s1.x1'], section: 'Index', hint: 'starter = free tier; p1/p2 = production' },
@@ -45,7 +45,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'Go to app.pinecone.io and sign in (or create a free account).',
           'Select your project from the left sidebar.',
           'Click "API Keys" in the left menu.',
-          'Click "Create API Key", give it a name like "fabric-prod", then copy the key immediately — it won\'t be shown again.',
+          'Click "Create API Key", give it a name like "aethon-prod", then copy the key immediately — it won\'t be shown again.',
           'Paste the key into the field on the left.',
         ],
         links: [
@@ -88,7 +88,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     fields: [
       { key: 'url',       label: 'Cluster URL', placeholder: 'https://xxx.weaviate.network', type: 'text',     section: 'Connection',    hint: 'console.weaviate.cloud → your cluster → Connect tab' },
       { key: 'apiKey',    label: 'API Key',     placeholder: 'wcs_…',                        type: 'password', section: 'Authentication', hint: 'Cluster → API Keys → Create Key' },
-      { key: 'className', label: 'Class Name',  placeholder: 'FabricDocument',               type: 'text',     section: 'Schema',        hint: 'PascalCase; auto-created on first upsert if absent' },
+      { key: 'className', label: 'Class Name',  placeholder: 'AethonDocument',               type: 'text',     section: 'Schema',        hint: 'PascalCase; auto-created on first upsert if absent' },
       { key: 'vectorizer',label: 'Vectorizer',  placeholder: '', type: 'select', options: ['text2vec-openai','text2vec-cohere','text2vec-huggingface','none'], section: 'Schema', hint: 'none = bring your own vectors' },
     ],
     guide: {
@@ -110,7 +110,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         steps: [
           'In the WCS console, open your cluster.',
           'Go to the "API Keys" tab.',
-          'Click "Create API Key", choose "Read & Write" for Fabric.',
+          'Click "Create API Key", choose "Read & Write" for Aethon.',
           'Copy the key — it starts with "wcs_" — and paste it here.',
           'For self-hosted Weaviate with OIDC, use the token from your identity provider instead.',
         ],
@@ -121,7 +121,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       Schema: {
         overview: 'A class in Weaviate is equivalent to a collection. It defines the shape and vectorizer for your objects.',
         steps: [
-          'Choose a PascalCase class name (e.g. FabricDocument). Weaviate will create it automatically on first write if auto-schema is enabled.',
+          'Choose a PascalCase class name (e.g. AethonDocument). Weaviate will create it automatically on first write if auto-schema is enabled.',
           'Select a vectorizer that matches your data pipeline: text2vec-openai uses OpenAI to auto-embed text; text2vec-cohere uses Cohere; none means you supply pre-computed vectors.',
           'If using text2vec-openai, add your OpenAI API key to Weaviate\'s module config (WCS → Cluster → Modules tab).',
           'Optionally define your schema explicitly via the REST API or Weaviate client to control property types.',
@@ -140,7 +140,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     fields: [
       { key: 'url',            label: 'URL',             placeholder: 'https://xxx.qdrant.io:6333', type: 'text',     section: 'Connection',    hint: 'cloud.qdrant.io → Cluster → Connection string' },
       { key: 'apiKey',         label: 'API Key',         placeholder: 'qdrant_…',                   type: 'password', section: 'Authentication', hint: 'Cluster → Security → API Keys → Generate' },
-      { key: 'collectionName', label: 'Collection Name', placeholder: 'fabric_vectors',             type: 'text',     section: 'Collection',    hint: 'Auto-created; use lowercase_snake_case' },
+      { key: 'collectionName', label: 'Collection Name', placeholder: 'aethon_vectors',             type: 'text',     section: 'Collection',    hint: 'Auto-created; use lowercase_snake_case' },
       { key: 'vectorSize',     label: 'Vector Size',     placeholder: '1536',                       type: 'number',   section: 'Collection',    hint: 'Must equal the output dimension of your embedder' },
       { key: 'distance',       label: 'Distance',        placeholder: '', type: 'select', options: ['Cosine','Euclid','Dot','Manhattan'], section: 'Collection', hint: 'Cosine is standard for text; Dot for normalized vectors' },
     ],
@@ -174,7 +174,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       Collection: {
         overview: 'A collection holds your vectors. Size and distance metric are fixed at creation and define search behavior.',
         steps: [
-          'Choose a collection name using lowercase_snake_case (e.g. fabric_vectors).',
+          'Choose a collection name using lowercase_snake_case (e.g. aethon_vectors).',
           'Set Vector Size to match your embedding model output: OpenAI text-embedding-3-small = 1536; all-MiniLM = 384; Cohere embed-v3 = 1024.',
           'Select Distance metric: Cosine is standard for text similarity; Euclid for spatial data; Dot for inner-product search on normalized vectors.',
           'The collection is created automatically on first insert, or you can pre-create it via the Qdrant dashboard or REST API.',
@@ -193,7 +193,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     fields: [
       { key: 'host',              label: 'Host',               placeholder: 'localhost',   type: 'text',   section: 'Connection', hint: 'IP or hostname where ChromaDB server is running' },
       { key: 'port',              label: 'Port',               placeholder: '8000',        type: 'number', section: 'Connection', hint: 'Default is 8000; change if you mapped a different port' },
-      { key: 'collectionName',    label: 'Collection Name',    placeholder: 'fabric_docs', type: 'text',   section: 'Collection', hint: 'Created automatically when you first add documents' },
+      { key: 'collectionName',    label: 'Collection Name',    placeholder: 'aethon_docs', type: 'text',   section: 'Collection', hint: 'Created automatically when you first add documents' },
       { key: 'embeddingFunction', label: 'Embedding Function', placeholder: '', type: 'select', options: ['openai','cohere','huggingface','default'], section: 'Collection', hint: 'default = built-in all-MiniLM-L6-v2 (no extra key needed)' },
     ],
     guide: {
@@ -215,7 +215,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       Collection: {
         overview: 'Collections are namespaces for your documents. The embedding function determines how text is vectorized.',
         steps: [
-          'Pick any name for your collection (e.g. fabric_docs). It\'s created on first add().',
+          'Pick any name for your collection (e.g. aethon_docs). It\'s created on first add().',
           'Choose an embedding function: "default" uses the built-in all-MiniLM-L6-v2 model (runs locally, no API key needed, 384 dimensions).',
           '"openai" uses OpenAI\'s text-embedding-ada-002 — requires OPENAI_API_KEY in the server\'s environment.',
           '"cohere" uses Cohere\'s embed model — requires COHERE_API_KEY in the server\'s environment.',
@@ -256,9 +256,9 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Schema: {
-        overview: 'Fabric will create the embeddings table automatically. The index type affects query speed vs. memory trade-offs.',
+        overview: 'Aethon will create the embeddings table automatically. The index type affects query speed vs. memory trade-offs.',
         steps: [
-          'Choose a table name (e.g. embeddings or fabric_vectors). Fabric creates it as: CREATE TABLE IF NOT EXISTS <name> (id bigserial PRIMARY KEY, content text, embedding vector(<dimensions>), metadata jsonb).',
+          'Choose a table name (e.g. embeddings or aethon_vectors). Aethon creates it as: CREATE TABLE IF NOT EXISTS <name> (id bigserial PRIMARY KEY, content text, embedding vector(<dimensions>), metadata jsonb).',
           'Set Dimensions to match your embedding model — this cannot be changed after the table is created.',
           'Index Type: HNSW (Hierarchical Navigable Small World) offers faster queries and better recall; IVFFlat uses less memory and is faster to build for large datasets.',
           'HNSW is recommended for most use cases with up to a few million vectors.',
@@ -279,11 +279,11 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://docs.snowflake.com',
     fields: [
       { key: 'account',   label: 'Account',   placeholder: 'orgname-accountname', type: 'text',     section: 'Connection',     hint: 'Admin → Accounts → Account Identifier (without .snowflakecomputing.com)' },
-      { key: 'username',  label: 'Username',  placeholder: 'FABRIC_USER',         type: 'text',     section: 'Authentication', hint: 'Snowflake login name (not email)' },
+      { key: 'username',  label: 'Username',  placeholder: 'AETHON_USER',         type: 'text',     section: 'Authentication', hint: 'Snowflake login name (not email)' },
       { key: 'password',  label: 'Password',  placeholder: '••••••••',            type: 'password', section: 'Authentication', hint: 'Consider using a dedicated service account' },
       { key: 'role',      label: 'Role',      placeholder: 'SYSADMIN',            type: 'text',     section: 'Authentication', hint: 'Role must have USAGE on warehouse and database' },
-      { key: 'warehouse', label: 'Warehouse', placeholder: 'FABRIC_WH',          type: 'text',     section: 'Resources',      hint: 'Admin → Warehouses; XSMALL sufficient for most ETL jobs' },
-      { key: 'database',  label: 'Database',  placeholder: 'FABRIC_DB',           type: 'text',     section: 'Resources',      hint: 'Data → Databases; create one if it doesn\'t exist' },
+      { key: 'warehouse', label: 'Warehouse', placeholder: 'AETHON_WH',          type: 'text',     section: 'Resources',      hint: 'Admin → Warehouses; XSMALL sufficient for most ETL jobs' },
+      { key: 'database',  label: 'Database',  placeholder: 'AETHON_DB',           type: 'text',     section: 'Resources',      hint: 'Data → Databases; create one if it doesn\'t exist' },
       { key: 'schema',    label: 'Schema',    placeholder: 'PUBLIC',              type: 'text',     section: 'Resources',      hint: 'Leave as PUBLIC or create a dedicated schema' },
     ],
     guide: {
@@ -302,12 +302,12 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Authentication: {
-        overview: 'Create a dedicated service account user for Fabric rather than using your personal login.',
+        overview: 'Create a dedicated service account user for Aethon rather than using your personal login.',
         steps: [
-          'In Snowflake, open a worksheet and run: CREATE USER fabric_user PASSWORD=\'<strong-password>\' DEFAULT_ROLE=SYSADMIN;',
-          'Grant the role: GRANT ROLE SYSADMIN TO USER fabric_user;',
+          'In Snowflake, open a worksheet and run: CREATE USER aethon_user PASSWORD=\'<strong-password>\' DEFAULT_ROLE=SYSADMIN;',
+          'Grant the role: GRANT ROLE SYSADMIN TO USER aethon_user;',
           'For least-privilege: create a custom role and grant only USAGE on the warehouse, database, and schema.',
-          'Enter the username (FABRIC_USER) and password you created above.',
+          'Enter the username (AETHON_USER) and password you created above.',
           'Role: SYSADMIN works for setup; switch to a restricted role once schema is stable.',
         ],
         links: [
@@ -316,12 +316,12 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Resources: {
-        overview: 'Fabric needs a virtual warehouse (compute), database (storage), and schema to operate.',
+        overview: 'Aethon needs a virtual warehouse (compute), database (storage), and schema to operate.',
         steps: [
-          'Create a warehouse: Admin → Warehouses → + Warehouse. Name it FABRIC_WH, size X-Small (sufficient for most ETL).',
-          'Create a database: Data → Databases → + Database. Name it FABRIC_DB.',
-          'The schema PUBLIC is created automatically. Or create a dedicated one: CREATE SCHEMA FABRIC_DB.ANALYTICS;',
-          'Grant access: GRANT USAGE ON WAREHOUSE FABRIC_WH TO ROLE <your_role>; GRANT ALL ON DATABASE FABRIC_DB TO ROLE <your_role>;',
+          'Create a warehouse: Admin → Warehouses → + Warehouse. Name it AETHON_WH, size X-Small (sufficient for most ETL).',
+          'Create a database: Data → Databases → + Database. Name it AETHON_DB.',
+          'The schema PUBLIC is created automatically. Or create a dedicated one: CREATE SCHEMA AETHON_DB.ANALYTICS;',
+          'Grant access: GRANT USAGE ON WAREHOUSE AETHON_WH TO ROLE <your_role>; GRANT ALL ON DATABASE AETHON_DB TO ROLE <your_role>;',
         ],
         links: [
           { label: 'Warehouses', url: 'https://docs.snowflake.com/en/user-guide/warehouses-overview' },
@@ -336,7 +336,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://cloud.google.com/bigquery/docs',
     fields: [
       { key: 'projectId',         label: 'Project ID',             placeholder: 'my-gcp-project',        type: 'text',     section: 'Project',        hint: 'GCP Console header → project dropdown → Project ID (not name)' },
-      { key: 'dataset',           label: 'Dataset',                placeholder: 'fabric_analytics',      type: 'text',     section: 'Project',        hint: 'BigQuery → Explorer → Create Dataset' },
+      { key: 'dataset',           label: 'Dataset',                placeholder: 'aethon_analytics',      type: 'text',     section: 'Project',        hint: 'BigQuery → Explorer → Create Dataset' },
       { key: 'location',          label: 'Location',               placeholder: '', type: 'select', options: ['US','EU','us-central1','us-east1','europe-west1','asia-east1'], section: 'Project', hint: 'Must match the dataset location; US is multi-region' },
       { key: 'serviceAccountKey', label: 'Service Account (JSON)', placeholder: '{"type":"service_account"…}', type: 'textarea', section: 'Authentication', hint: 'IAM → Service Accounts → Keys → Add Key → JSON; paste full JSON here' },
     ],
@@ -348,7 +348,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'Copy the "Project ID" (not the display name) — it looks like my-project-123456.',
           'Enable the BigQuery API: APIs & Services → Library → search "BigQuery API" → Enable.',
           'Create a dataset: go to BigQuery → Explorer panel → click your project → Create Dataset.',
-          'Name the dataset (e.g. fabric_analytics), choose a location, and click Create.',
+          'Name the dataset (e.g. aethon_analytics), choose a location, and click Create.',
           'Location tip: US (multi-region) is the simplest choice unless you have data residency requirements.',
         ],
         links: [
@@ -357,10 +357,10 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Authentication: {
-        overview: 'A service account JSON key lets Fabric authenticate to BigQuery without user interaction.',
+        overview: 'A service account JSON key lets Aethon authenticate to BigQuery without user interaction.',
         steps: [
           'In GCP Console → IAM & Admin → Service Accounts → Create Service Account.',
-          'Give it a name like "fabric-bigquery" and click Create.',
+          'Give it a name like "aethon-bigquery" and click Create.',
           'On the "Grant this service account access" screen, add the role "BigQuery Data Editor" (or "BigQuery Admin" for full access).',
           'Once created, click on the service account → Keys tab → Add Key → Create new key → JSON.',
           'A .json file downloads automatically. Open it and paste the entire JSON content into the field on the left.',
@@ -380,7 +380,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     fields: [
       { key: 'host',     label: 'Host',     placeholder: 'cluster.xxx.region.redshift.amazonaws.com', type: 'text',     section: 'Connection',     hint: 'Redshift Console → Clusters → your cluster → Endpoint (without port)' },
       { key: 'port',     label: 'Port',     placeholder: '5439',   type: 'number', section: 'Connection',     hint: 'Default is 5439; check cluster properties to confirm' },
-      { key: 'database', label: 'Database', placeholder: 'fabric_db', type: 'text', section: 'Connection',    hint: 'Set when cluster was created; default is "dev"' },
+      { key: 'database', label: 'Database', placeholder: 'aethon_db', type: 'text', section: 'Connection',    hint: 'Set when cluster was created; default is "dev"' },
       { key: 'username', label: 'Username', placeholder: 'admin',  type: 'text',     section: 'Authentication', hint: 'Master user created at cluster launch, or a DB user you created' },
       { key: 'password', label: 'Password', placeholder: '••••••••', type: 'password', section: 'Authentication', hint: 'Use a dedicated service user rather than the master admin' },
       { key: 'schema',   label: 'Schema',   placeholder: 'public', type: 'text',     section: 'Schema',        hint: 'public is the default schema; create a new one for isolation' },
@@ -401,11 +401,11 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Authentication: {
-        overview: 'Use a dedicated database user for Fabric to apply least-privilege access control.',
+        overview: 'Use a dedicated database user for Aethon to apply least-privilege access control.',
         steps: [
           'Connect to your cluster via the Redshift Query Editor v2 (in the AWS Console).',
-          'Create a user: CREATE USER fabric_user PASSWORD \'<password>\';',
-          'Grant permissions: GRANT CONNECT ON DATABASE dev TO fabric_user; GRANT USAGE ON SCHEMA public TO fabric_user; GRANT ALL ON ALL TABLES IN SCHEMA public TO fabric_user;',
+          'Create a user: CREATE USER aethon_user PASSWORD \'<password>\';',
+          'Grant permissions: GRANT CONNECT ON DATABASE dev TO aethon_user; GRANT USAGE ON SCHEMA public TO aethon_user; GRANT ALL ON ALL TABLES IN SCHEMA public TO aethon_user;',
           'Enter the username and password you created above.',
           'Avoid using the master admin credentials in production.',
         ],
@@ -415,11 +415,11 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Schema: {
-        overview: 'Schemas organize tables within a database. Using a dedicated schema keeps Fabric data isolated.',
+        overview: 'Schemas organize tables within a database. Using a dedicated schema keeps Aethon data isolated.',
         steps: [
           '"public" is the default schema and always exists — use it for simplicity.',
-          'To create a dedicated schema: CREATE SCHEMA fabric; GRANT ALL ON SCHEMA fabric TO fabric_user;',
-          'Set search_path so your user defaults to the right schema: ALTER USER fabric_user SET search_path TO fabric, public;',
+          'To create a dedicated schema: CREATE SCHEMA aethon; GRANT ALL ON SCHEMA aethon TO aethon_user;',
+          'Set search_path so your user defaults to the right schema: ALTER USER aethon_user SET search_path TO aethon, public;',
         ],
         links: [
           { label: 'Schemas', url: 'https://docs.aws.amazon.com/redshift/latest/dg/r_Schemas_and_tables.html' },
@@ -436,11 +436,11 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       { key: 'token',    label: 'Personal Access Token', placeholder: 'dapi…',                               type: 'password', section: 'Authentication', hint: 'User Settings → Developer → Access Tokens → Generate' },
       { key: 'httpPath', label: 'HTTP Path',             placeholder: '/sql/1.0/warehouses/xxx',             type: 'text',     section: 'Connection',     hint: 'SQL Warehouses → your warehouse → Connection Details' },
       { key: 'catalog',  label: 'Catalog',               placeholder: 'hive_metastore',                     type: 'text',     section: 'Schema',        hint: 'Unity Catalog name; use hive_metastore if not using Unity Catalog' },
-      { key: 'schema',   label: 'Schema',                placeholder: 'fabric_analytics',                   type: 'text',     section: 'Schema',        hint: 'Database / schema within the catalog' },
+      { key: 'schema',   label: 'Schema',                placeholder: 'aethon_analytics',                   type: 'text',     section: 'Schema',        hint: 'Database / schema within the catalog' },
     ],
     guide: {
       Connection: {
-        overview: 'Fabric connects to Databricks via the SQL Connector, which targets a SQL Warehouse for fast query execution.',
+        overview: 'Aethon connects to Databricks via the SQL Connector, which targets a SQL Warehouse for fast query execution.',
         steps: [
           'Log into your Databricks workspace. The workspace URL in your browser is what you need (e.g. https://adb-1234567890.azuredatabricks.net).',
           'In the left sidebar, go to SQL → SQL Warehouses.',
@@ -458,7 +458,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         steps: [
           'In your Databricks workspace, click your username (top-right) → Settings.',
           'Go to "Developer" → "Access Tokens" → "Generate New Token".',
-          'Give it a comment like "fabric-etl" and set an expiry (90 days recommended).',
+          'Give it a comment like "aethon-etl" and set an expiry (90 days recommended).',
           'Copy the token — it starts with "dapi" — and paste it here.',
           'The token is shown only once. Store it securely.',
           'For service principals: use the OAuth M2M flow with client ID + secret instead.',
@@ -474,7 +474,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'If using Unity Catalog: the catalog name is visible in Data → Catalogs in the workspace.',
           'If not using Unity Catalog: use "hive_metastore" as the catalog name.',
           'For the schema: create one via Data → your catalog → + Create Schema, or use "default".',
-          'Fabric will create its tables in catalog.schema automatically.',
+          'Aethon will create its tables in catalog.schema automatically.',
         ],
         links: [
           { label: 'Unity Catalog', url: 'https://docs.databricks.com/en/data-governance/unity-catalog/index.html' },
@@ -488,7 +488,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     name: 'DuckDB', color: '#FFC600', category: 'Data Warehouse',
     docsUrl: 'https://duckdb.org/docs/',
     fields: [
-      { key: 'databasePath', label: 'Database Path',  placeholder: ':memory: or /path/to/fabric.db', type: 'text',   section: 'Connection',  hint: 'Use :memory: for ephemeral; file path for persistent storage' },
+      { key: 'databasePath', label: 'Database Path',  placeholder: ':memory: or /path/to/aethon.db', type: 'text',   section: 'Connection',  hint: 'Use :memory: for ephemeral; file path for persistent storage' },
       { key: 'schema',       label: 'Schema',         placeholder: 'main',       type: 'text',   section: 'Schema',      hint: '"main" is the default schema in every DuckDB database' },
       { key: 'threads',      label: 'Threads',        placeholder: '4',          type: 'number', section: 'Performance', hint: 'DuckDB uses all CPU cores by default; reduce to limit resource use' },
       { key: 'memoryLimit',  label: 'Memory Limit',   placeholder: '4GB',        type: 'text',   section: 'Performance', hint: 'e.g. 2GB, 512MB — prevents DuckDB from using all available RAM' },
@@ -499,7 +499,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         steps: [
           'No installation needed beyond the DuckDB library (pip install duckdb or the Node.js package).',
           'Use ":memory:" for a temporary in-memory database that\'s wiped on exit — great for testing.',
-          'Use a file path like "/data/fabric.db" or "C:\\data\\fabric.db" for persistent storage.',
+          'Use a file path like "/data/aethon.db" or "C:\\data\\aethon.db" for persistent storage.',
           'DuckDB can also read directly from Parquet, CSV, and JSON files — no import needed.',
           'For shared access: MotherDuck (motherduck.com) is a managed cloud DuckDB service.',
         ],
@@ -542,8 +542,8 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://kafka.apache.org/documentation/',
     fields: [
       { key: 'bootstrapServers', label: 'Bootstrap Servers',  placeholder: 'broker1:9092,broker2:9092', type: 'text',     section: 'Connection', hint: 'Confluent Cloud → Cluster Settings → Bootstrap server' },
-      { key: 'topic',            label: 'Topic',              placeholder: 'fabric.events',             type: 'text',     section: 'Messaging',  hint: 'Topics → Create topic, or auto-created on first produce' },
-      { key: 'groupId',          label: 'Consumer Group ID',  placeholder: 'fabric-consumer',           type: 'text',     section: 'Messaging',  hint: 'Unique per consumer application; used for offset tracking' },
+      { key: 'topic',            label: 'Topic',              placeholder: 'aethon.events',             type: 'text',     section: 'Messaging',  hint: 'Topics → Create topic, or auto-created on first produce' },
+      { key: 'groupId',          label: 'Consumer Group ID',  placeholder: 'aethon-consumer',           type: 'text',     section: 'Messaging',  hint: 'Unique per consumer application; used for offset tracking' },
       { key: 'securityProtocol', label: 'Security Protocol', placeholder: '', type: 'select', options: ['PLAINTEXT','SSL','SASL_PLAINTEXT','SASL_SSL'], section: 'Security', hint: 'SASL_SSL for Confluent Cloud; PLAINTEXT for local dev' },
       { key: 'saslUsername',     label: 'SASL Username',      placeholder: 'kafka-user',                type: 'text',     section: 'Security',   hint: 'Confluent Cloud API key ID, or your Kafka user' },
       { key: 'saslPassword',     label: 'SASL Password',      placeholder: '••••••••',                  type: 'password', section: 'Security',   hint: 'Confluent Cloud API key secret, or your Kafka password' },
@@ -565,9 +565,9 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       Messaging: {
         overview: 'Topics are the fundamental unit of organization. The consumer group ID tracks which messages your application has processed.',
         steps: [
-          'Create a topic: in Confluent Cloud → Topics → + Add topic. Name it using dot notation (e.g. fabric.events).',
+          'Create a topic: in Confluent Cloud → Topics → + Add topic. Name it using dot notation (e.g. aethon.events).',
           'Set the partition count based on desired parallelism (start with 6 for production).',
-          'Consumer Group ID: choose a unique name for Fabric (e.g. fabric-etl-consumer). Kafka uses this to track your read offset — never share a group ID between different applications.',
+          'Consumer Group ID: choose a unique name for Aethon (e.g. aethon-etl-consumer). Kafka uses this to track your read offset — never share a group ID between different applications.',
           'Retention: set to 7 days (604800000 ms) in the topic configuration for event replay capability.',
         ],
         links: [
@@ -578,7 +578,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       Security: {
         overview: 'SASL_SSL is the standard for Confluent Cloud and most managed Kafka services. PLAINTEXT is for local development only.',
         steps: [
-          'For Confluent Cloud: go to your cluster → API Keys → + Add key → select "Fabric ETL" as the service account → copy the Key and Secret.',
+          'For Confluent Cloud: go to your cluster → API Keys → + Add key → select "Aethon ETL" as the service account → copy the Key and Secret.',
           'Set Security Protocol to SASL_SSL, SASL Username to the API Key ID, SASL Password to the API Key Secret.',
           'For Amazon MSK with IAM auth: use SASL_SSL with MSK IAM library (different flow — consult MSK docs).',
           'For local Kafka without auth: use PLAINTEXT and leave username/password blank.',
@@ -597,8 +597,8 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://pulsar.apache.org/docs/',
     fields: [
       { key: 'serviceUrl',       label: 'Service URL',  placeholder: 'pulsar://localhost:6650',            type: 'text',     section: 'Connection',     hint: 'Use pulsar:// for plaintext or pulsar+ssl:// for TLS' },
-      { key: 'topic',            label: 'Topic',        placeholder: 'persistent://public/default/fabric', type: 'text',     section: 'Messaging',      hint: 'Full topic path: persistent://<tenant>/<namespace>/<topic>' },
-      { key: 'subscriptionName', label: 'Subscription', placeholder: 'fabric-sub',                        type: 'text',     section: 'Messaging',      hint: 'Unique name; determines delivery mode (shared, exclusive, etc.)' },
+      { key: 'topic',            label: 'Topic',        placeholder: 'persistent://public/default/aethon', type: 'text',     section: 'Messaging',      hint: 'Full topic path: persistent://<tenant>/<namespace>/<topic>' },
+      { key: 'subscriptionName', label: 'Subscription', placeholder: 'aethon-sub',                        type: 'text',     section: 'Messaging',      hint: 'Unique name; determines delivery mode (shared, exclusive, etc.)' },
       { key: 'token',            label: 'Auth Token',   placeholder: 'eyJhbGci…',                         type: 'password', section: 'Authentication', hint: 'JWT from pulsar-admin tokens create, or StreamNative Cloud console' },
     ],
     guide: {
@@ -619,9 +619,9 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'Pulsar topics use a 4-part naming scheme. Subscriptions define how multiple consumers share messages.',
         steps: [
           'Topic format: persistent://<tenant>/<namespace>/<topic-name>. The default tenant/namespace is public/default.',
-          'Create a topic: pulsar-admin topics create persistent://public/default/fabric-events',
+          'Create a topic: pulsar-admin topics create persistent://public/default/aethon-events',
           'Or let it auto-create by producing to it.',
-          'Subscription name: choose a unique name per application (e.g. fabric-etl). The subscription type controls fan-out: Shared (round-robin among consumers), Exclusive (single consumer), Failover (standby).',
+          'Subscription name: choose a unique name per application (e.g. aethon-etl). The subscription type controls fan-out: Shared (round-robin among consumers), Exclusive (single consumer), Failover (standby).',
         ],
         links: [
           { label: 'Topics', url: 'https://pulsar.apache.org/docs/concepts-messaging/#topics' },
@@ -631,7 +631,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       Authentication: {
         overview: 'Pulsar uses JWT tokens for client authentication. Tokens are signed by the broker\'s private key.',
         steps: [
-          'For self-hosted: generate a token with pulsar-admin tokens create --subject fabric-client. Copy the JWT output.',
+          'For self-hosted: generate a token with pulsar-admin tokens create --subject aethon-client. Copy the JWT output.',
           'For StreamNative Cloud: console.streamnative.io → Service Accounts → Create → Download token.',
           'For Astra Streaming: astra.datastax.com → your tenant → Settings → Token → Generate Token.',
           'The token is a JWT string starting with "eyJ". Paste it into the Auth Token field.',
@@ -648,7 +648,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     name: 'AWS Kinesis', color: '#FF9900', category: 'Stream Processor',
     docsUrl: 'https://docs.aws.amazon.com/kinesis/',
     fields: [
-      { key: 'streamName',      label: 'Stream Name',       placeholder: 'fabric-stream', type: 'text',   section: 'Stream',         hint: 'Kinesis → Data Streams → Create data stream' },
+      { key: 'streamName',      label: 'Stream Name',       placeholder: 'aethon-stream', type: 'text',   section: 'Stream',         hint: 'Kinesis → Data Streams → Create data stream' },
       { key: 'region',          label: 'AWS Region',        placeholder: '', type: 'select', options: ['us-east-1','us-west-2','eu-west-1','ap-southeast-1','ap-northeast-1'], section: 'Stream', hint: 'Must match the region where your stream is deployed' },
       { key: 'shardCount',      label: 'Shard Count',       placeholder: '4',             type: 'number', section: 'Stream',         hint: '1 shard = 1 MB/s write, 2 MB/s read; scale up for higher throughput' },
       { key: 'accessKeyId',     label: 'Access Key ID',     placeholder: 'AKIA…',         type: 'text',     section: 'Authentication', hint: 'IAM → Users → your user → Security credentials → Create access key' },
@@ -659,7 +659,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'A Kinesis Data Stream is a durable, real-time data channel. Shards are the unit of capacity.',
         steps: [
           'Go to AWS Console → Kinesis → Data Streams → Create data stream.',
-          'Enter a stream name (e.g. fabric-stream). Choose "On-demand" capacity mode for automatic scaling, or "Provisioned" to specify shard count.',
+          'Enter a stream name (e.g. aethon-stream). Choose "On-demand" capacity mode for automatic scaling, or "Provisioned" to specify shard count.',
           'For Provisioned mode: start with 1 shard for development, 4+ for production. Each shard supports 1 MB/s ingest and 2 MB/s read.',
           'Note the region — you must use the same region in the connection config.',
           'Data retention defaults to 24 hours; extend to 7 days in stream settings for replay capability.',
@@ -670,14 +670,14 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Authentication: {
-        overview: 'Fabric uses IAM access keys to authenticate to Kinesis. Use a dedicated IAM user with minimal permissions.',
+        overview: 'Aethon uses IAM access keys to authenticate to Kinesis. Use a dedicated IAM user with minimal permissions.',
         steps: [
-          'Go to AWS Console → IAM → Users → Create user. Name it "fabric-kinesis-user".',
+          'Go to AWS Console → IAM → Users → Create user. Name it "aethon-kinesis-user".',
           'Attach permissions: click "Attach policies directly" → search for "AmazonKinesisFullAccess". For least-privilege, create a custom policy granting only kinesis:PutRecord, kinesis:GetRecords, kinesis:GetShardIterator on your specific stream ARN.',
           'Once the user is created, go to the user\'s page → "Security credentials" tab → "Create access key".',
           'Choose "Application running outside AWS", create the key, and copy both the Access Key ID and Secret Access Key.',
           'The secret is shown only once. Store it in a password manager before closing the dialog.',
-          'Prefer IAM roles over access keys when running Fabric inside AWS (EC2, ECS, Lambda).',
+          'Prefer IAM roles over access keys when running Aethon inside AWS (EC2, ECS, Lambda).',
         ],
         links: [
           { label: 'IAM access keys', url: 'https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html' },
@@ -698,13 +698,13 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     ],
     guide: {
       Connection: {
-        overview: 'Fabric communicates with Flink via its REST API, exposed by the JobManager on port 8081 by default.',
+        overview: 'Aethon communicates with Flink via its REST API, exposed by the JobManager on port 8081 by default.',
         steps: [
           'For local development: download Flink from flink.apache.org, extract it, and run ./bin/start-cluster.sh. The Web UI is at http://localhost:8081.',
           'For Docker: docker run -p 8081:8081 apache/flink standalone-job (or use docker compose with JobManager + TaskManager).',
           'For cloud: Confluent Cloud for Flink provides a managed service. Use the REST endpoint from the Confluent environment settings.',
           'For Amazon Managed Service for Apache Flink: find the Application URL in the AWS Console under Kinesis → Analytics applications.',
-          'Ensure port 8081 is accessible from the Fabric server (open in security group / firewall if needed).',
+          'Ensure port 8081 is accessible from the Aethon server (open in security group / firewall if needed).',
         ],
         links: [
           { label: 'Flink quickstart', url: 'https://nightlies.apache.org/flink/flink-docs-stable/docs/try-flink/local_installation/' },
@@ -733,7 +733,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://spark.apache.org/docs/latest/streaming-programming-guide.html',
     fields: [
       { key: 'masterUrl',     label: 'Master URL',        placeholder: 'spark://host:7077 or yarn', type: 'text',   section: 'Connection', hint: 'spark:// for standalone, yarn for YARN, local[*] for dev' },
-      { key: 'appName',       label: 'Application Name',  placeholder: 'FabricStreamJob',           type: 'text',   section: 'Job',        hint: 'Shown in Spark UI; use a descriptive, unique name' },
+      { key: 'appName',       label: 'Application Name',  placeholder: 'AethonStreamJob',           type: 'text',   section: 'Job',        hint: 'Shown in Spark UI; use a descriptive, unique name' },
       { key: 'batchDuration', label: 'Batch Duration (s)', placeholder: '10',                       type: 'number', section: 'Job',        hint: 'How often micro-batches are processed; 10s is a common starting point' },
       { key: 'checkpointDir', label: 'Checkpoint Dir',    placeholder: 'hdfs://path/checkpoint',   type: 'text',   section: 'Job',        hint: 'HDFS or S3 path for fault tolerance and stateful operations' },
     ],
@@ -756,9 +756,9 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       Job: {
         overview: 'These settings define the streaming job\'s behavior, micro-batch frequency, and fault-tolerance.',
         steps: [
-          'Application Name: choose a clear name (e.g. FabricStreamJob). It appears in the Spark History Server and YARN Resource Manager UI.',
+          'Application Name: choose a clear name (e.g. AethonStreamJob). It appears in the Spark History Server and YARN Resource Manager UI.',
           'Batch Duration: the micro-batch interval in seconds. Start with 10s. Lower values (1-2s) give near-real-time latency but increase scheduler overhead. Structured Streaming with trigger interval is preferred over DStreams for new code.',
-          'Checkpoint Dir: required for stateful operations and recovery. Use an HDFS path (hdfs://namenode:8020/checkpoints/fabric) or S3 (s3a://bucket/checkpoints/fabric).',
+          'Checkpoint Dir: required for stateful operations and recovery. Use an HDFS path (hdfs://namenode:8020/checkpoints/aethon) or S3 (s3a://bucket/checkpoints/aethon).',
           'For S3 checkpoints: add hadoop-aws JAR to the classpath and configure AWS credentials via spark.hadoop.fs.s3a.access.key / secret.key.',
           'Keep the checkpoint directory between restarts — deleting it resets all stateful aggregations.',
         ],
@@ -778,22 +778,22 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     fields: [
       { key: 'host',        label: 'Host',            placeholder: 'db.example.com or 127.0.0.1', type: 'text',     section: 'Connection',     hint: 'Hostname or IP of your MySQL server; RDS endpoint from AWS Console' },
       { key: 'port',        label: 'Port',            placeholder: '3306',                        type: 'number',   section: 'Connection',     hint: 'Default MySQL port is 3306' },
-      { key: 'database',    label: 'Database',        placeholder: 'fabric_db',                   type: 'text',     section: 'Connection',     hint: 'Name of the schema/database to connect to' },
-      { key: 'username',    label: 'Username',        placeholder: 'fabric_user',                 type: 'text',     section: 'Authentication', hint: 'CREATE USER fabric_user@\'%\' IDENTIFIED BY \'password\';' },
+      { key: 'database',    label: 'Database',        placeholder: 'aethon_db',                   type: 'text',     section: 'Connection',     hint: 'Name of the schema/database to connect to' },
+      { key: 'username',    label: 'Username',        placeholder: 'aethon_user',                 type: 'text',     section: 'Authentication', hint: 'CREATE USER aethon_user@\'%\' IDENTIFIED BY \'password\';' },
       { key: 'password',    label: 'Password',        placeholder: '••••••••',                    type: 'password', section: 'Authentication', hint: 'Use a dedicated service account, not root' },
       { key: 'sslMode',     label: 'SSL Mode',        placeholder: '', type: 'select', options: ['disabled','required','verify-ca','verify-identity'], section: 'Options', hint: 'required for cloud-hosted MySQL (RDS, Cloud SQL, PlanetScale)' },
       { key: 'poolSize',    label: 'Connection Pool', placeholder: '10', type: 'number', section: 'Options', hint: 'Max simultaneous connections; start with 10' },
     ],
     guide: {
       Connection: {
-        overview: 'Fabric connects to MySQL via JDBC/native driver. You need the server hostname, port, and a target database.',
+        overview: 'Aethon connects to MySQL via JDBC/native driver. You need the server hostname, port, and a target database.',
         steps: [
           'For local MySQL: host = localhost, port = 3306.',
           'For AWS RDS: AWS Console → RDS → Databases → your instance → Connectivity & security → Endpoint.',
           'For Google Cloud SQL: Cloud Console → SQL → your instance → Overview → Connection name / IP address.',
           'For Azure Database for MySQL: Azure Portal → your server → Overview → Server name.',
           'For PlanetScale: Dashboard → your database → Connect → hostname from connection string.',
-          'Ensure the MySQL server allows connections from Fabric\'s IP (check firewall rules / security groups).',
+          'Ensure the MySQL server allows connections from Aethon\'s IP (check firewall rules / security groups).',
         ],
         links: [
           { label: 'AWS RDS MySQL', url: 'https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_ConnectToInstance.html' },
@@ -801,12 +801,12 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Authentication: {
-        overview: 'Create a dedicated MySQL user with only the permissions Fabric needs — avoid using root.',
+        overview: 'Create a dedicated MySQL user with only the permissions Aethon needs — avoid using root.',
         steps: [
           'Connect to MySQL as root: mysql -u root -p',
-          'Create a user: CREATE USER \'fabric_user\'@\'%\' IDENTIFIED BY \'<strong-password>\';',
-          'Grant permissions for read/write: GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP ON fabric_db.* TO \'fabric_user\'@\'%\';',
-          'For read-only extraction: GRANT SELECT ON source_db.* TO \'fabric_user\'@\'%\';',
+          'Create a user: CREATE USER \'aethon_user\'@\'%\' IDENTIFIED BY \'<strong-password>\';',
+          'Grant permissions for read/write: GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP ON aethon_db.* TO \'aethon_user\'@\'%\';',
+          'For read-only extraction: GRANT SELECT ON source_db.* TO \'aethon_user\'@\'%\';',
           'Apply: FLUSH PRIVILEGES;',
           'For cloud-managed MySQL (RDS, Cloud SQL): create users via the cloud console or a SQL worksheet.',
         ],
@@ -836,10 +836,10 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     fields: [
       { key: 'host',        label: 'Host',            placeholder: 'server.database.windows.net', type: 'text',     section: 'Connection',     hint: 'Azure SQL: Azure Portal → SQL server → Server name' },
       { key: 'port',        label: 'Port',            placeholder: '1433',                        type: 'number',   section: 'Connection',     hint: 'Default is 1433; named instances may differ' },
-      { key: 'database',    label: 'Database',        placeholder: 'FabricDB',                    type: 'text',     section: 'Connection',     hint: 'The database name (not the server name)' },
+      { key: 'database',    label: 'Database',        placeholder: 'AethonDB',                    type: 'text',     section: 'Connection',     hint: 'The database name (not the server name)' },
       { key: 'instance',    label: 'Instance Name',   placeholder: 'MSSQLSERVER (optional)',      type: 'text',     section: 'Connection',     hint: 'Only for named instances on on-premise SQL Server; leave blank for Azure SQL' },
       { key: 'authType',    label: 'Auth Type',       placeholder: '', type: 'select', options: ['SQL Auth','Windows Auth','Azure AD','Azure AD MSI'], section: 'Authentication', hint: 'Azure SQL → use SQL Auth or Azure AD; on-prem → SQL Auth or Windows Auth' },
-      { key: 'username',    label: 'Username',        placeholder: 'fabric_user',                 type: 'text',     section: 'Authentication', hint: 'SQL login name; not required for Windows Auth or Azure AD MSI' },
+      { key: 'username',    label: 'Username',        placeholder: 'aethon_user',                 type: 'text',     section: 'Authentication', hint: 'SQL login name; not required for Windows Auth or Azure AD MSI' },
       { key: 'password',    label: 'Password',        placeholder: '••••••••',                    type: 'password', section: 'Authentication', hint: 'Minimum 8 chars with mixed case, numbers, symbols for Azure SQL' },
       { key: 'encrypt',     label: 'Encrypt',         placeholder: '', type: 'select', options: ['true','false'],               section: 'Options',        hint: 'Always true for Azure SQL; required for TLS-enabled on-prem' },
       { key: 'trustCert',   label: 'Trust Server Cert', placeholder: '', type: 'select', options: ['false','true'],             section: 'Options',        hint: 'false = verify server cert (production); true = skip verification (dev only)' },
@@ -852,7 +852,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'For Azure SQL Managed Instance: Portal → SQL managed instances → your instance → Overview → Host.',
           'For on-premise / VM: use the server\'s hostname or IP. For named instances, append \\InstanceName (e.g. MYSERVER\\SQLEXPRESS).',
           'For Amazon RDS SQL Server: RDS Console → your instance → Endpoint & port.',
-          'Port 1433 must be open in the firewall/security group from Fabric\'s IP.',
+          'Port 1433 must be open in the firewall/security group from Aethon\'s IP.',
         ],
         links: [
           { label: 'Azure SQL connectivity', url: 'https://learn.microsoft.com/en-us/azure/azure-sql/database/connect-query-content-reference-guide' },
@@ -863,8 +863,8 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'SQL Auth is simplest. Azure AD is recommended for Azure SQL in production (no password to manage).',
         steps: [
           'SQL Auth: create a login at the server level, then a user in the database.',
-          'On the server: CREATE LOGIN fabric_login WITH PASSWORD = \'<password>\';',
-          'In the database: USE FabricDB; CREATE USER fabric_user FOR LOGIN fabric_login; ALTER ROLE db_datareader ADD MEMBER fabric_user; ALTER ROLE db_datawriter ADD MEMBER fabric_user;',
+          'On the server: CREATE LOGIN aethon_login WITH PASSWORD = \'<password>\';',
+          'In the database: USE AethonDB; CREATE USER aethon_user FOR LOGIN aethon_login; ALTER ROLE db_datareader ADD MEMBER aethon_user; ALTER ROLE db_datawriter ADD MEMBER aethon_user;',
           'Azure AD Auth: in Azure Portal → SQL server → Azure Active Directory → Set admin. Then create a contained user: CREATE USER [user@domain.com] FROM EXTERNAL PROVIDER;',
           'Azure AD MSI (Managed Identity): assign the managed identity to the SQL server as an AAD admin. No credentials needed.',
         ],
@@ -877,7 +877,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'Encryption and certificate trust settings control transport security.',
         steps: [
           'Encrypt = true is mandatory for Azure SQL and should be used for all production connections.',
-          'Trust Server Certificate = false is the secure default — Fabric will verify the server\'s TLS certificate.',
+          'Trust Server Certificate = false is the secure default — Aethon will verify the server\'s TLS certificate.',
           'Set Trust Server Certificate = true only for local development with a self-signed certificate.',
           'For on-premise with a corporate CA: set to false and ensure the CA cert is in the system trust store.',
         ],
@@ -897,7 +897,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       { key: 'serviceName',  label: 'Service Name',   placeholder: 'ORCL or pdbname.domain',      type: 'text',     section: 'Connection',     hint: 'Preferred over SID for modern Oracle (12c+). Find via: SELECT name FROM v$services;' },
       { key: 'sid',          label: 'SID (legacy)',   placeholder: 'ORCL',                        type: 'text',     section: 'Connection',     hint: 'Use Service Name instead for Oracle 12c+; SID is for older instances' },
       { key: 'connectMode',  label: 'Connect Mode',   placeholder: '', type: 'select', options: ['thin','thick'], section: 'Connection', hint: 'thin = pure Java, no Oracle Client needed; thick = full Oracle Client (OCI)' },
-      { key: 'username',     label: 'Username',       placeholder: 'FABRIC',                      type: 'text',     section: 'Authentication', hint: 'Oracle usernames are case-insensitive; use uppercase by convention' },
+      { key: 'username',     label: 'Username',       placeholder: 'AETHON',                      type: 'text',     section: 'Authentication', hint: 'Oracle usernames are case-insensitive; use uppercase by convention' },
       { key: 'password',     label: 'Password',       placeholder: '••••••••',                    type: 'password', section: 'Authentication', hint: 'Password is case-sensitive in Oracle 12c+' },
       { key: 'walletDir',    label: 'Wallet Directory', placeholder: '/opt/oracle/wallet (optional)', type: 'text', section: 'Authentication', hint: 'Required for Oracle Cloud ADB (mTLS); download wallet from ADB Console → DB Connection' },
     ],
@@ -920,9 +920,9 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'Oracle uses schema-level users. In a multi-tenant (CDB) setup, use a PDB user with the C## prefix for CDB-level accounts.',
         steps: [
           'Connect as SYSDBA or a DBA account to create a user.',
-          'Create user: CREATE USER fabric IDENTIFIED BY "<password>";',
-          'Grant permissions: GRANT CONNECT, RESOURCE TO fabric; GRANT UNLIMITED TABLESPACE TO fabric;',
-          'For read-only extraction: GRANT SELECT ANY TABLE TO fabric; (or grant per-table: GRANT SELECT ON schema.table TO fabric;)',
+          'Create user: CREATE USER aethon IDENTIFIED BY "<password>";',
+          'Grant permissions: GRANT CONNECT, RESOURCE TO aethon; GRANT UNLIMITED TABLESPACE TO aethon;',
+          'For read-only extraction: GRANT SELECT ANY TABLE TO aethon; (or grant per-table: GRANT SELECT ON schema.table TO aethon;)',
           'For Oracle Cloud ADB: use the cloud console to create users, or connect via SQL Developer Web.',
           'Wallet auth: place the downloaded wallet files (cwallet.sso, ewallet.p12, etc.) in a directory and set walletDir to that path.',
         ],
@@ -1020,10 +1020,10 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'Sybase ASE uses its own login system. Create a dedicated login and map it to a database user.',
         steps: [
           'Connect as "sa" (system admin) or an account with SA_ROLE.',
-          'Create a login: sp_addlogin fabric_login, "<password>", fabric_db',
-          'Add user to database: USE fabric_db; sp_adduser fabric_login, fabric_user',
-          'Grant permissions: GRANT SELECT, INSERT, UPDATE, DELETE ON table_name TO fabric_user',
-          'For read-only ETL source: GRANT SELECT ON ALL TABLES IN DATABASE TO fabric_user',
+          'Create a login: sp_addlogin aethon_login, "<password>", aethon_db',
+          'Add user to database: USE aethon_db; sp_adduser aethon_login, aethon_user',
+          'Grant permissions: GRANT SELECT, INSERT, UPDATE, DELETE ON table_name TO aethon_user',
+          'For read-only ETL source: GRANT SELECT ON ALL TABLES IN DATABASE TO aethon_user',
           'Charset must match the ASE server: run sp_helpsort to check; utf8 is common for modern ASE.',
         ],
         links: [
@@ -1039,35 +1039,35 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     name: 'Local Files', color: '#64748B', category: 'File Source',
     docsUrl: 'https://nodejs.org/api/fs.html',
     fields: [
-      { key: 'basePath',    label: 'Base Directory',  placeholder: '/data/fabric or C:\\data\\fabric',  type: 'text',   section: 'Source',  hint: 'Absolute path to the directory containing source files' },
+      { key: 'basePath',    label: 'Base Directory',  placeholder: '/data/aethon or C:\\data\\aethon',  type: 'text',   section: 'Source',  hint: 'Absolute path to the directory containing source files' },
       { key: 'filePattern', label: 'File Pattern',    placeholder: '**/*.csv',                          type: 'text',   section: 'Source',  hint: 'Glob pattern: *.csv, **/*.json, data_*.parquet' },
       { key: 'recursive',   label: 'Recursive Scan',  placeholder: '', type: 'select', options: ['true','false'],  section: 'Source',  hint: 'true = scan all subdirectories; false = top-level only' },
-      { key: 'fileFormat',  label: 'File Format',     placeholder: '', type: 'select', options: ['CSV','JSON','Parquet','Excel','Avro','TSV'], section: 'Format', hint: 'Primary format; Fabric auto-detects by extension if not set' },
+      { key: 'fileFormat',  label: 'File Format',     placeholder: '', type: 'select', options: ['CSV','JSON','Parquet','Excel','Avro','TSV'], section: 'Format', hint: 'Primary format; Aethon auto-detects by extension if not set' },
       { key: 'delimiter',   label: 'Delimiter (CSV)', placeholder: ',',  type: 'text',   section: 'Format',  hint: 'For CSV/TSV: , (comma), \\t (tab), | (pipe), ; (semicolon)' },
       { key: 'hasHeader',   label: 'Has Header Row',  placeholder: '', type: 'select', options: ['true','false'], section: 'Format', hint: 'true = first row is column names; false = use col_0, col_1...' },
       { key: 'encoding',    label: 'Encoding',        placeholder: 'utf-8', type: 'select', options: ['utf-8','utf-16','latin1','ascii'], section: 'Format', hint: 'Text encoding of the source files; utf-8 covers most modern files' },
     ],
     guide: {
       Source: {
-        overview: 'Fabric reads files from a local filesystem path. The file watcher picks up new files matching the pattern automatically.',
+        overview: 'Aethon reads files from a local filesystem path. The file watcher picks up new files matching the pattern automatically.',
         steps: [
           'Set Base Directory to the absolute path of the folder containing your data files (e.g. /data/exports or C:\\ETL\\input).',
           'File Pattern uses glob syntax: *.csv matches all CSVs in the base dir; **/*.csv includes subdirectories; data_2024*.json matches files starting with "data_2024".',
           'Recursive Scan = true scans all nested subdirectories. Useful for date-partitioned exports (YYYY/MM/DD/...).',
-          'Ensure Fabric has read permission on the directory: on Linux, check with ls -la <path>; on Windows, check folder Properties → Security.',
-          'For real-time ingestion: Fabric watches for new files matching the pattern and processes them as they arrive.',
+          'Ensure Aethon has read permission on the directory: on Linux, check with ls -la <path>; on Windows, check folder Properties → Security.',
+          'For real-time ingestion: Aethon watches for new files matching the pattern and processes them as they arrive.',
         ],
         links: [
           { label: 'Glob pattern reference', url: 'https://en.wikipedia.org/wiki/Glob_(programming)' },
         ],
       },
       Format: {
-        overview: 'Specify the file format and parsing options so Fabric can correctly interpret the source data.',
+        overview: 'Specify the file format and parsing options so Aethon can correctly interpret the source data.',
         steps: [
-          'CSV: most common format. Set Delimiter (comma, tab, pipe), and Has Header Row. Fabric infers column types automatically.',
-          'JSON: either newline-delimited JSON (one object per line) or a JSON array. Fabric handles both.',
+          'CSV: most common format. Set Delimiter (comma, tab, pipe), and Has Header Row. Aethon infers column types automatically.',
+          'JSON: either newline-delimited JSON (one object per line) or a JSON array. Aethon handles both.',
           'Parquet: columnar binary format — fastest for large datasets. No delimiter or header settings needed.',
-          'Excel (.xlsx): Fabric reads the first sheet by default. Ensure pandas/openpyxl is installed in the Fabric environment.',
+          'Excel (.xlsx): Aethon reads the first sheet by default. Ensure pandas/openpyxl is installed in the Aethon environment.',
           'Avro: schema-embedded binary format. The schema is read from the file header automatically.',
           'Encoding: use utf-8 for most files. If you see garbled characters (mojibake), try latin1 or utf-16.',
         ],
@@ -1083,7 +1083,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     name: 'AWS S3', color: '#FF9900', category: 'File Source',
     docsUrl: 'https://docs.aws.amazon.com/s3/index.html',
     fields: [
-      { key: 'bucket',          label: 'Bucket Name',       placeholder: 'my-fabric-data',       type: 'text',     section: 'Storage',        hint: 'S3 Console → Buckets → your bucket name (globally unique)' },
+      { key: 'bucket',          label: 'Bucket Name',       placeholder: 'my-aethon-data',       type: 'text',     section: 'Storage',        hint: 'S3 Console → Buckets → your bucket name (globally unique)' },
       { key: 'prefix',          label: 'Prefix / Folder',   placeholder: 'exports/2024/',         type: 'text',     section: 'Storage',        hint: 'Virtual folder path within the bucket; leave blank to scan entire bucket' },
       { key: 'region',          label: 'AWS Region',        placeholder: '', type: 'select', options: ['us-east-1','us-west-2','eu-west-1','eu-central-1','ap-southeast-1','ap-northeast-1'], section: 'Storage', hint: 'Must match the region where the bucket was created' },
       { key: 'accessKeyId',     label: 'Access Key ID',     placeholder: 'AKIA…',                 type: 'text',     section: 'Authentication', hint: 'IAM → Users → your user → Security credentials → Create access key' },
@@ -1093,11 +1093,11 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     ],
     guide: {
       Storage: {
-        overview: 'S3 is AWS\'s object storage. Fabric reads objects from a bucket, optionally filtered by a prefix (virtual folder).',
+        overview: 'S3 is AWS\'s object storage. Aethon reads objects from a bucket, optionally filtered by a prefix (virtual folder).',
         steps: [
           'Create a bucket: AWS Console → S3 → Create bucket. Choose a unique name and the target region.',
           'Organize files using prefixes (folder-like paths): e.g. exports/2024/01/data.parquet.',
-          'Set the Prefix field to limit Fabric\'s scan to a specific "folder" (e.g. exports/2024/ or raw/transactions/).',
+          'Set the Prefix field to limit Aethon\'s scan to a specific "folder" (e.g. exports/2024/ or raw/transactions/).',
           'Leave Prefix blank to scan the entire bucket — caution for large buckets with many objects.',
           'Ensure the bucket is in the same region as your other AWS resources to minimize cross-region data transfer costs.',
         ],
@@ -1107,14 +1107,14 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Authentication: {
-        overview: 'Use a dedicated IAM user with read-only S3 access. If Fabric runs on AWS (EC2, ECS, Lambda), use an IAM role instead — no keys needed.',
+        overview: 'Use a dedicated IAM user with read-only S3 access. If Aethon runs on AWS (EC2, ECS, Lambda), use an IAM role instead — no keys needed.',
         steps: [
-          'Create a dedicated IAM user: AWS Console → IAM → Users → Create user → name it "fabric-s3-reader".',
+          'Create a dedicated IAM user: AWS Console → IAM → Users → Create user → name it "aethon-s3-reader".',
           'Attach policy: on the Permissions tab, click "Attach policies directly" → search for "AmazonS3ReadOnlyAccess" (or create a custom policy for least-privilege access to specific buckets).',
           'Custom least-privilege policy: {"Effect":"Allow","Action":["s3:GetObject","s3:ListBucket"],"Resource":["arn:aws:s3:::my-bucket","arn:aws:s3:::my-bucket/*"]}',
           'Generate credentials: go to the user → Security credentials tab → Create access key → choose "Application outside AWS".',
           'Copy both the Access Key ID and Secret. The secret is shown only once.',
-          'If Fabric runs on AWS infrastructure: attach an IAM role to the EC2/ECS task instead and leave both fields blank.',
+          'If Aethon runs on AWS infrastructure: attach an IAM role to the EC2/ECS task instead and leave both fields blank.',
         ],
         links: [
           { label: 'IAM S3 policy', url: 'https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-iam-awsmanpol.html' },
@@ -1122,11 +1122,11 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Format: {
-        overview: 'Specify the format and compression of files Fabric should read from S3.',
+        overview: 'Specify the format and compression of files Aethon should read from S3.',
         steps: [
           'Parquet + Snappy is the most efficient combination for analytical workloads — minimal storage, fast reads.',
           'CSV + gzip is common for data exports from databases and SaaS tools.',
-          'JSON: if each S3 object is a JSON array, Fabric unpacks it. If newline-delimited JSON (NDJSON), each line is a record.',
+          'JSON: if each S3 object is a JSON array, Aethon unpacks it. If newline-delimited JSON (NDJSON), each line is a record.',
           'For mixed formats in a bucket, configure a separate source connector per format using different prefixes.',
           'Compression is auto-detected from file extension (.gz, .snappy, .zst) but you can set it explicitly here as a default.',
         ],
@@ -1142,7 +1142,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://learn.microsoft.com/en-us/azure/storage/blobs/',
     fields: [
       { key: 'accountName',        label: 'Storage Account',   placeholder: 'mystorageaccount',             type: 'text',     section: 'Storage',        hint: 'Azure Portal → Storage accounts → your account name' },
-      { key: 'containerName',      label: 'Container',         placeholder: 'fabric-data',                  type: 'text',     section: 'Storage',        hint: 'Storage account → Containers → your container name' },
+      { key: 'containerName',      label: 'Container',         placeholder: 'aethon-data',                  type: 'text',     section: 'Storage',        hint: 'Storage account → Containers → your container name' },
       { key: 'blobPrefix',         label: 'Blob Prefix',       placeholder: 'exports/2024/',                type: 'text',     section: 'Storage',        hint: 'Virtual folder path; leave blank to scan entire container' },
       { key: 'connectionString',   label: 'Connection String', placeholder: 'DefaultEndpointsProtocol=https;AccountName=…', type: 'password', section: 'Authentication', hint: 'Storage account → Access keys → key1 → Connection string' },
       { key: 'sasToken',           label: 'SAS Token (alt)',   placeholder: '?sv=2023-01-03&…',             type: 'password', section: 'Authentication', hint: 'Alternative to connection string; generated in Storage account → Shared access signature' },
@@ -1156,7 +1156,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'Create a storage account: Azure Portal → Storage accounts → + Create. Choose a unique name (3-24 lowercase alphanumeric chars).',
           'Create a container: open the storage account → Containers → + Container. Set access level to "Private (no anonymous access)".',
           'Upload files or configure Azure Data Factory / ADF copy activity to land files in this container.',
-          'Use Blob Prefix to limit Fabric\'s scan (e.g. exports/daily/ for daily snapshots).',
+          'Use Blob Prefix to limit Aethon\'s scan (e.g. exports/daily/ for daily snapshots).',
           'Azure Data Lake Storage Gen2 (ADLS Gen2) uses the same API — set accountName to your ADLS account and it works the same way.',
         ],
         links: [
@@ -1172,7 +1172,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'SAS Token (recommended for production with least-privilege): Azure Portal → your storage account → Shared access signature.',
           'Configure SAS with: Allowed services = Blob, Allowed resource types = Container + Object, Permissions = Read + List, expiry date → Generate SAS.',
           'Copy the "SAS token" (starts with ?sv=). Paste it into the SAS Token field.',
-          'For Azure AD / managed identity: leave both fields blank and ensure Fabric\'s managed identity has the "Storage Blob Data Reader" role on the container.',
+          'For Azure AD / managed identity: leave both fields blank and ensure Aethon\'s managed identity has the "Storage Blob Data Reader" role on the container.',
         ],
         links: [
           { label: 'Storage access keys', url: 'https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage' },
@@ -1181,13 +1181,13 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Format: {
-        overview: 'Specify the format and compression of blobs Fabric reads from Azure.',
+        overview: 'Specify the format and compression of blobs Aethon reads from Azure.',
         steps: [
           'Parquet + Snappy: best performance for analytics. Widely used with Azure Synapse and Databricks.',
           'CSV + gzip: standard for scheduled exports from Azure SQL, Cosmos DB change feed, or Logic Apps.',
           'JSON: Azure Event Hub capture, IoT Hub routing, and Logic Apps commonly produce JSON files.',
           'Delta Lake tables (Delta format) on ADLS Gen2: set format to Parquet — Delta is Parquet with transaction logs.',
-          'For mixed formats: create separate Fabric sources pointing to different prefixes, each with its own format setting.',
+          'For mixed formats: create separate Aethon sources pointing to different prefixes, each with its own format setting.',
         ],
         links: [
           { label: 'Azure supported formats', url: 'https://learn.microsoft.com/en-us/azure/data-factory/supported-file-formats-and-compression-codecs' },
@@ -1204,8 +1204,8 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     fields: [
       { key: 'host',       label: 'Host',         placeholder: 'db.example.com',          type: 'text',     section: 'Connection',     hint: 'Supabase: Settings → Database → Host; Neon: Dashboard → Connection string' },
       { key: 'port',       label: 'Port',         placeholder: '5432',                    type: 'number',   section: 'Connection',     hint: 'Default PostgreSQL port is 5432' },
-      { key: 'database',   label: 'Database',     placeholder: 'fabric_db',               type: 'text',     section: 'Connection',     hint: 'Database name; for Supabase this is "postgres"' },
-      { key: 'username',   label: 'Username',     placeholder: 'fabric_user',             type: 'text',     section: 'Authentication', hint: 'CREATE ROLE fabric_user WITH LOGIN PASSWORD \'...\';' },
+      { key: 'database',   label: 'Database',     placeholder: 'aethon_db',               type: 'text',     section: 'Connection',     hint: 'Database name; for Supabase this is "postgres"' },
+      { key: 'username',   label: 'Username',     placeholder: 'aethon_user',             type: 'text',     section: 'Authentication', hint: 'CREATE ROLE aethon_user WITH LOGIN PASSWORD \'...\';' },
       { key: 'password',   label: 'Password',     placeholder: '••••••••',                type: 'password', section: 'Authentication', hint: 'Use a dedicated service account rather than the superuser' },
       { key: 'sslMode',    label: 'SSL Mode',     placeholder: '', type: 'select', options: ['require','disable','verify-ca','verify-full','prefer'], section: 'Options', hint: 'require for all cloud-hosted Postgres (Supabase, Neon, RDS, etc.)' },
       { key: 'cdcEnabled', label: 'CDC / Replication', placeholder: '', type: 'select', options: ['false','true'], section: 'Options', hint: 'true = use logical replication slot for real-time change capture' },
@@ -1218,7 +1218,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'Neon: Dashboard → your project → Connection Details → connection string. Parse host/port/db from the URL.',
           'AWS RDS: Console → RDS → your instance → Connectivity → Endpoint & Port.',
           'Local: host = localhost, port = 5432.',
-          'The host must be reachable from Fabric. For cloud DBs, whitelist Fabric\'s IP in security groups.',
+          'The host must be reachable from Aethon. For cloud DBs, whitelist Aethon\'s IP in security groups.',
         ],
         links: [
           { label: 'Supabase connection', url: 'https://supabase.com/docs/guides/database/connecting-to-postgres' },
@@ -1227,12 +1227,12 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Authentication: {
-        overview: 'Create a dedicated role for Fabric with only the permissions it needs.',
+        overview: 'Create a dedicated role for Aethon with only the permissions it needs.',
         steps: [
-          'Connect as a superuser and run: CREATE ROLE fabric_user WITH LOGIN PASSWORD \'<password>\';',
-          'For read-only extraction: GRANT CONNECT ON DATABASE fabric_db TO fabric_user; GRANT USAGE ON SCHEMA public TO fabric_user; GRANT SELECT ON ALL TABLES IN SCHEMA public TO fabric_user;',
+          'Connect as a superuser and run: CREATE ROLE aethon_user WITH LOGIN PASSWORD \'<password>\';',
+          'For read-only extraction: GRANT CONNECT ON DATABASE aethon_db TO aethon_user; GRANT USAGE ON SCHEMA public TO aethon_user; GRANT SELECT ON ALL TABLES IN SCHEMA public TO aethon_user;',
           'For read/write: additionally grant INSERT, UPDATE, DELETE.',
-          'For CDC (logical replication): the user needs REPLICATION privilege: ALTER ROLE fabric_user REPLICATION;',
+          'For CDC (logical replication): the user needs REPLICATION privilege: ALTER ROLE aethon_user REPLICATION;',
         ],
         links: [
           { label: 'Role management', url: 'https://www.postgresql.org/docs/current/user-manag.html' },
@@ -1244,7 +1244,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         steps: [
           'SSL Mode "require": encrypts the connection but does not verify the server certificate. Suitable for most cloud-hosted Postgres.',
           '"verify-full": also verifies the server certificate against a CA. Use for production security-hardened deployments.',
-          'CDC / Replication: when enabled, Fabric creates a logical replication slot and consumes WAL events in real time. Requires PostgreSQL 10+ and wal_level = logical on the server.',
+          'CDC / Replication: when enabled, Aethon creates a logical replication slot and consumes WAL events in real time. Requires PostgreSQL 10+ and wal_level = logical on the server.',
           'Enable WAL: on AWS RDS, set rds.logical_replication = 1 in the parameter group. On Supabase, it\'s enabled by default.',
         ],
         links: [
@@ -1260,7 +1260,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://www.mongodb.com/docs/drivers/',
     fields: [
       { key: 'connectionString', label: 'Connection String', placeholder: 'mongodb+srv://user:pass@cluster.mongodb.net/', type: 'password', section: 'Connection', hint: 'Atlas: Connect → Drivers → copy the connection string' },
-      { key: 'database',         label: 'Database',          placeholder: 'fabric_db',                                    type: 'text',     section: 'Connection', hint: 'MongoDB database name (not the cluster name)' },
+      { key: 'database',         label: 'Database',          placeholder: 'aethon_db',                                    type: 'text',     section: 'Connection', hint: 'MongoDB database name (not the cluster name)' },
       { key: 'collection',       label: 'Default Collection',placeholder: 'events',                                       type: 'text',     section: 'Connection', hint: 'Primary collection to read from; can query others at runtime' },
       { key: 'authSource',       label: 'Auth Source',       placeholder: 'admin',                                        type: 'text',     section: 'Authentication', hint: 'Database where the user is created; usually "admin"' },
       { key: 'tlsEnabled',       label: 'TLS',               placeholder: '', type: 'select', options: ['true','false'],  section: 'Authentication', hint: 'Always true for MongoDB Atlas and most cloud deployments' },
@@ -1299,7 +1299,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'Change Streams enable real-time CDC for MongoDB collections without polling.',
         steps: [
           'Change Streams require a replica set or sharded cluster (Atlas always uses replica sets).',
-          'When enabled, Fabric opens a change stream on the collection and processes insert/update/delete events in real time.',
+          'When enabled, Aethon opens a change stream on the collection and processes insert/update/delete events in real time.',
           'For self-hosted: ensure the deployment is a replica set: rs.initiate(). Standalone mongod does not support change streams.',
           'Change streams require MongoDB 3.6+; for full document updates use MongoDB 4.0+.',
         ],
@@ -1315,21 +1315,21 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://developer.mozilla.org/en-US/docs/Web/HTTP',
     fields: [
       { key: 'baseUrl',     label: 'Base URL',         placeholder: 'https://api.example.com/v2', type: 'text',     section: 'Endpoint',       hint: 'Root URL; individual resource paths are appended at runtime' },
-      { key: 'authType',    label: 'Auth Type',        placeholder: '', type: 'select', options: ['None','API Key','Bearer Token','Basic Auth','OAuth 2.0'], section: 'Authentication', hint: 'How Fabric authenticates to this API' },
+      { key: 'authType',    label: 'Auth Type',        placeholder: '', type: 'select', options: ['None','API Key','Bearer Token','Basic Auth','OAuth 2.0'], section: 'Authentication', hint: 'How Aethon authenticates to this API' },
       { key: 'apiKey',      label: 'API Key / Token',  placeholder: 'your-api-key-or-token',       type: 'password', section: 'Authentication', hint: 'For API Key and Bearer Token auth types' },
       { key: 'apiKeyHeader',label: 'Key Header Name',  placeholder: 'X-API-Key or Authorization',  type: 'text',     section: 'Authentication', hint: 'Header name for the API key; defaults to "X-API-Key"' },
       { key: 'username',    label: 'Username',         placeholder: 'api-user',                    type: 'text',     section: 'Authentication', hint: 'For Basic Auth only' },
       { key: 'password',    label: 'Password',         placeholder: '••••••••',                    type: 'password', section: 'Authentication', hint: 'For Basic Auth only' },
-      { key: 'rateLimit',   label: 'Rate Limit (req/min)', placeholder: '60',                      type: 'number',   section: 'Behaviour',      hint: 'Fabric will throttle requests to stay under this limit' },
+      { key: 'rateLimit',   label: 'Rate Limit (req/min)', placeholder: '60',                      type: 'number',   section: 'Behaviour',      hint: 'Aethon will throttle requests to stay under this limit' },
       { key: 'pagination',  label: 'Pagination Style', placeholder: '', type: 'select', options: ['None','page/per_page','cursor','offset/limit','Link header'], section: 'Behaviour', hint: 'How the API paginates large result sets' },
       { key: 'dataPath',    label: 'Data JSON Path',   placeholder: 'data or results or items',    type: 'text',     section: 'Behaviour',      hint: 'JSON key containing the records array in the response' },
     ],
     guide: {
       Endpoint: {
-        overview: 'Fabric can extract from any REST API. The Base URL is the common prefix; endpoints are configured per extraction job.',
+        overview: 'Aethon can extract from any REST API. The Base URL is the common prefix; endpoints are configured per extraction job.',
         steps: [
           'Set the Base URL to the API root (e.g. https://api.stripe.com/v1 or https://api.github.com).',
-          'Fabric appends the resource path at extraction time (e.g. /charges or /repos/{owner}/{repo}/issues).',
+          'Aethon appends the resource path at extraction time (e.g. /charges or /repos/{owner}/{repo}/issues).',
           'Check the API\'s documentation for the base URL — it\'s usually listed in the "Getting Started" section.',
           'For APIs with versioning: include the version in the base URL (e.g. /v2/) rather than adding it per request.',
         ],
@@ -1341,8 +1341,8 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'Most APIs require one of four auth styles. Check the API documentation to determine which.',
         steps: [
           'API Key: the most common pattern. Set Auth Type to "API Key", paste the key, and set the header name (e.g. X-API-Key, api-key, or Authorization).',
-          'Bearer Token: set Auth Type to "Bearer Token" and paste the token. Fabric sends: Authorization: Bearer <token>.',
-          'Basic Auth: set username and password. Fabric sends: Authorization: Basic base64(user:password).',
+          'Bearer Token: set Auth Type to "Bearer Token" and paste the token. Aethon sends: Authorization: Bearer <token>.',
+          'Basic Auth: set username and password. Aethon sends: Authorization: Basic base64(user:password).',
           'OAuth 2.0: currently requires a pre-generated access token. Set Auth Type to "Bearer Token" and paste the OAuth access token.',
           'Where to find your API key: usually in the developer portal or settings of the service (e.g. Stripe Dashboard → Developers → API Keys).',
         ],
@@ -1352,9 +1352,9 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Behaviour: {
-        overview: 'Rate limiting and pagination settings prevent Fabric from hitting API limits or missing data.',
+        overview: 'Rate limiting and pagination settings prevent Aethon from hitting API limits or missing data.',
         steps: [
-          'Rate Limit: check the API docs for the requests-per-minute cap and set it here. Fabric queues requests to stay under this limit.',
+          'Rate Limit: check the API docs for the requests-per-minute cap and set it here. Aethon queues requests to stay under this limit.',
           'Pagination: most APIs paginate large datasets. Common styles: page+per_page (?page=2&per_page=100), cursor-based (?cursor=abc123), offset+limit (?offset=200&limit=100).',
           'Data JSON Path: if the API returns { "data": [...] }, set this to "data". If it returns { "results": { "items": [...] } }, set it to "results.items".',
           'Leave Data JSON Path blank if the root of the response is the array.',
@@ -1371,7 +1371,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     docsUrl: 'https://cloud.google.com/storage/docs',
     fields: [
       { key: 'projectId',         label: 'GCP Project ID',        placeholder: 'my-gcp-project',                     type: 'text',     section: 'Storage',        hint: 'GCP Console header → Project ID (not display name)' },
-      { key: 'bucket',            label: 'Bucket Name',           placeholder: 'my-fabric-bucket',                   type: 'text',     section: 'Storage',        hint: 'Cloud Storage → Buckets → your bucket name' },
+      { key: 'bucket',            label: 'Bucket Name',           placeholder: 'my-aethon-bucket',                   type: 'text',     section: 'Storage',        hint: 'Cloud Storage → Buckets → your bucket name' },
       { key: 'prefix',            label: 'Object Prefix',         placeholder: 'exports/daily/',                     type: 'text',     section: 'Storage',        hint: 'Virtual folder path; leave blank to scan entire bucket' },
       { key: 'serviceAccountKey', label: 'Service Account (JSON)',placeholder: '{"type":"service_account"…}',        type: 'textarea', section: 'Authentication', hint: 'IAM → Service Accounts → Keys → Add Key → JSON' },
       { key: 'fileFormat',        label: 'File Format',           placeholder: '', type: 'select', options: ['CSV','JSON','Parquet','Avro','TSV'], section: 'Format', hint: 'Primary format of objects in the bucket' },
@@ -1379,11 +1379,11 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     ],
     guide: {
       Storage: {
-        overview: 'Google Cloud Storage (GCS) is GCP\'s object store. Fabric reads objects from a bucket using the Storage API.',
+        overview: 'Google Cloud Storage (GCS) is GCP\'s object store. Aethon reads objects from a bucket using the Storage API.',
         steps: [
           'Create a bucket: GCP Console → Cloud Storage → Buckets → Create.',
           'Choose a globally unique name, select your region, and set storage class (Standard for active data).',
-          'Set the Prefix to limit which objects Fabric reads (e.g. exports/2024/ reads only objects under that path).',
+          'Set the Prefix to limit which objects Aethon reads (e.g. exports/2024/ reads only objects under that path).',
           'Enable Versioning if you need point-in-time access to older file versions.',
         ],
         links: [
@@ -1395,7 +1395,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'A service account with Storage Object Viewer role gives read-only access to the bucket.',
         steps: [
           'GCP Console → IAM & Admin → Service Accounts → Create Service Account.',
-          'Name it "fabric-gcs-reader", click Create.',
+          'Name it "aethon-gcs-reader", click Create.',
           'Grant role: "Storage Object Viewer" (read-only) or "Storage Object Admin" (read+write).',
           'Click the service account → Keys → Add Key → Create new key → JSON.',
           'A .json file downloads. Open it and paste the entire JSON into the Service Account field.',
@@ -1406,7 +1406,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         ],
       },
       Format: {
-        overview: 'Specify the file format Fabric should use when reading objects from the bucket.',
+        overview: 'Specify the file format Aethon should use when reading objects from the bucket.',
         steps: [
           'Parquet + Snappy: most efficient for analytical pipelines. Widely used with BigQuery and Dataflow.',
           'CSV + gzip: standard for exports from BigQuery, Cloud SQL, or external tools.',
@@ -1427,7 +1427,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       { key: 'host',         label: 'Host',           placeholder: 'sftp.example.com',          type: 'text',     section: 'Connection',     hint: 'SFTP server hostname or IP address' },
       { key: 'port',         label: 'Port',           placeholder: '22',                        type: 'number',   section: 'Connection',     hint: 'Default SFTP port is 22' },
       { key: 'remotePath',   label: 'Remote Path',    placeholder: '/data/exports/',            type: 'text',     section: 'Connection',     hint: 'Absolute path on the remote server to read files from' },
-      { key: 'username',     label: 'Username',       placeholder: 'fabric-sftp',               type: 'text',     section: 'Authentication', hint: 'SFTP login username' },
+      { key: 'username',     label: 'Username',       placeholder: 'aethon-sftp',               type: 'text',     section: 'Authentication', hint: 'SFTP login username' },
       { key: 'authMethod',   label: 'Auth Method',    placeholder: '', type: 'select', options: ['password','private-key'], section: 'Authentication', hint: 'Private key is more secure; password auth may be blocked by some servers' },
       { key: 'password',     label: 'Password',       placeholder: '••••••••',                  type: 'password', section: 'Authentication', hint: 'Used when Auth Method is "password"' },
       { key: 'privateKey',   label: 'Private Key (PEM)', placeholder: '-----BEGIN OPENSSH PRIVATE KEY-----', type: 'textarea', section: 'Authentication', hint: 'Paste the contents of your id_rsa or id_ed25519 private key' },
@@ -1451,10 +1451,10 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       Authentication: {
         overview: 'Private key authentication is strongly preferred over passwords for automated access.',
         steps: [
-          'Generate a key pair on your local machine: ssh-keygen -t ed25519 -C "fabric-sftp"',
+          'Generate a key pair on your local machine: ssh-keygen -t ed25519 -C "aethon-sftp"',
           'Add the public key (~/.ssh/id_ed25519.pub) to the server\'s authorized_keys: ssh-copy-id -i ~/.ssh/id_ed25519.pub user@sftp-host',
           'Paste the private key contents (the entire file including BEGIN/END lines) into the Private Key field.',
-          'For AWS Transfer Family: create a user → upload the public key → Fabric uses the private key.',
+          'For AWS Transfer Family: create a user → upload the public key → Aethon uses the private key.',
           'For password auth: enable PasswordAuthentication in the server\'s sshd_config (may already be disabled for security).',
         ],
         links: [
@@ -1498,7 +1498,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'Find Security Token: in Salesforce, click your name → Settings → Reset My Security Token. It\'s emailed to you.',
           'Create a Connected App: Setup → App Manager → New Connected App. Enable OAuth, add a callback URL (https://localhost), select scopes (api, refresh_token).',
           'Copy the Consumer Key and Consumer Secret from the Connected App to the Client ID / Secret fields.',
-          'For IP whitelisting: Setup → Network Access → add Fabric\'s IP to Trusted IP Ranges, or set the Connected App IP Relaxation to "Relax IP restrictions".',
+          'For IP whitelisting: Setup → Network Access → add Aethon\'s IP to Trusted IP Ranges, or set the Connected App IP Relaxation to "Relax IP restrictions".',
         ],
         links: [
           { label: 'Connected Apps', url: 'https://help.salesforce.com/s/articleView?id=sf.connected_app_overview.htm' },
@@ -1520,7 +1520,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
     ],
     guide: {
       Source: {
-        overview: 'Fabric reads Google Sheets via the Sheets API. You need the spreadsheet ID and a service account with access to it.',
+        overview: 'Aethon reads Google Sheets via the Sheets API. You need the spreadsheet ID and a service account with access to it.',
         steps: [
           'Spreadsheet ID: open the sheet in your browser. The URL looks like: https://docs.google.com/spreadsheets/d/<SPREADSHEET_ID>/edit. Copy the long alphanumeric ID.',
           'Sheet Name: the tab at the bottom of the spreadsheet. Case-sensitive.',
@@ -1536,7 +1536,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
         overview: 'A GCP service account with the Google Sheets API enabled is the standard approach for server-to-server access.',
         steps: [
           'Enable the API: GCP Console → APIs & Services → Library → search "Google Sheets API" → Enable.',
-          'Create a service account: GCP Console → IAM & Admin → Service Accounts → Create Service Account. Name it "fabric-sheets".',
+          'Create a service account: GCP Console → IAM & Admin → Service Accounts → Create Service Account. Name it "aethon-sheets".',
           'No IAM role needed at the GCP level — Sheets permissions are handled by sharing the spreadsheet.',
           'Generate a key: click the service account → Keys → Add Key → Create new key → JSON. Download the file.',
           'Paste the entire JSON contents into the Service Account field here.',
@@ -1559,17 +1559,17 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
       { key: 'username',   label: 'Username',          placeholder: 'elastic',                type: 'text',     section: 'Authentication', hint: 'The built-in "elastic" superuser, or a custom role user' },
       { key: 'password',   label: 'Password',          placeholder: '••••••••',               type: 'password', section: 'Authentication', hint: 'Reset via: bin/elasticsearch-reset-password -u elastic' },
       { key: 'apiKey',     label: 'API Key (alt)',      placeholder: 'base64encodedkey==',     type: 'password', section: 'Authentication', hint: 'Alternative to username/password; create in Kibana → Stack Management → API Keys' },
-      { key: 'indexName',  label: 'Index / Data Stream',placeholder: 'logs-* or fabric-events', type: 'text',   section: 'Query',          hint: 'Index name or pattern; supports wildcards (logs-*)' },
+      { key: 'indexName',  label: 'Index / Data Stream',placeholder: 'logs-* or aethon-events', type: 'text',   section: 'Query',          hint: 'Index name or pattern; supports wildcards (logs-*)' },
       { key: 'queryDsl',   label: 'Query DSL (JSON)',  placeholder: '{"match_all":{}}',        type: 'textarea', section: 'Query',         hint: 'Elasticsearch Query DSL; use {"match_all":{}} to read all documents' },
     ],
     guide: {
       Connection: {
-        overview: 'Fabric connects to Elasticsearch via the REST API. Elastic Cloud uses a Cloud ID; self-hosted uses a direct URL.',
+        overview: 'Aethon connects to Elasticsearch via the REST API. Elastic Cloud uses a Cloud ID; self-hosted uses a direct URL.',
         steps: [
           'For Elastic Cloud: log into cloud.elastic.co → your deployment → click "Copy Cloud ID". Paste it into the Cloud ID field.',
           'For self-hosted / Docker: leave Cloud ID blank and set Host to http://localhost:9200 (or the server URL).',
           'For Docker: docker run -p 9200:9200 -e "discovery.type=single-node" elasticsearch:8.x',
-          'Ensure port 9200 is reachable from Fabric\'s host.',
+          'Ensure port 9200 is reachable from Aethon\'s host.',
         ],
         links: [
           { label: 'Elastic Cloud', url: 'https://cloud.elastic.co' },
@@ -1596,7 +1596,7 @@ export const INFRA_DEFS: Record<string, InfraServiceDef> = {
           'Index Name: the exact index name (e.g. orders) or a wildcard pattern (e.g. logs-2024-* for all 2024 logs).',
           'Data streams follow the same naming convention (e.g. logs-nginx.access-default).',
           'Query DSL: use {"match_all":{}} to read all documents. To filter: {"range":{"@timestamp":{"gte":"2024-01-01"}}}',
-          'Fabric uses the Scroll API or Point In Time (PIT) for large result sets to avoid memory issues.',
+          'Aethon uses the Scroll API or Point In Time (PIT) for large result sets to avoid memory issues.',
           'For time-series data: add a date range filter in the Query DSL to extract only the records you need.',
         ],
         links: [

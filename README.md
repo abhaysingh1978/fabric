@@ -1,4 +1,4 @@
-# Fabric
+# Aethon
 
 **Agentic ETL, AI & Multi-Agent Platform**
 
@@ -8,7 +8,7 @@
 
 ## Overview
 
-Fabric is built by our Technology Consulting Practice to showcase capabilities across enterprise verticals with live, interactive demonstrations. It ships with five built-in use cases and a full flow management system to onboard new domains without writing code.
+Aethon is built by our Technology Consulting Practice to showcase capabilities across enterprise verticals with live, interactive demonstrations. It ships with five built-in use cases and a full flow management system to onboard new domains without writing code.
 
 | Vertical | Use Cases |
 |---|---|
@@ -128,7 +128,7 @@ Click **Manage Sources ›** in Config to open the Data Source Manager. Configur
 ## Project Structure
 
 ```
-fabric/
+aethon/
 ├── src/
 │   ├── App.tsx                          # Root — merged categories, flow version
 │   ├── data/
@@ -197,4 +197,4 @@ Proprietary — Technology Consulting Practice. All rights reserved.
 
 ---
 
-*Fabric v2.0.0 · April 2026*
+*Aethon v2.0.0 · April 2026*

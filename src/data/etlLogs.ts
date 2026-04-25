@@ -1,5 +1,5 @@
 export const ETL_LOGS: string[] = [
-  '[PIPELINE] Initialising Fabric ETL pipeline · batch=100,000 · interval=30s · agents=8',
+  '[PIPELINE] Initialising Aethon ETL pipeline · batch=100,000 · interval=30s · agents=8',
   '[EXTRACT]  Connecting to NYSE/NASDAQ feed endpoints · 5 sources registered',
   '[EXTRACT]  Streaming 100,000 records from primary data source · latency 12ms',
   '[EXTRACT]  Fetched 847,200 rows from Snowflake warehouse · elapsed 340ms',
@@ -16,7 +16,7 @@ export const ETL_LOGS: string[] = [
   '[AGGREGATE] Merged 312 technical signals with 1.4M sentiment records · join latency 67ms',
   '[A2A]      Sentiment Agent → Risk Agent · payload: {sentimentScore:0.62, outliers:["NVDA","TSLA"]}',
   '[AGENTS]   Risk Agent activated · running VaR Monte Carlo simulation · 10,000 scenarios',
-  '[LOAD]     Writing 98,796 clean records to Snowflake · table: fabric_equity_signals',
+  '[LOAD]     Writing 98,796 clean records to Snowflake · table: aethon_equity_signals',
   '[LOAD]     Upserted 312 signal rows · 0 conflicts · write latency 28ms',
   '[INDEX]    Indexing 98,796 embedding vectors into Pinecone · namespace: equity-2026-04',
   '[INDEX]    Vector upsert complete · 98,796 vectors · index latency 410ms · p99 38ms',

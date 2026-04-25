@@ -1,4 +1,4 @@
-const PREFIX = 'fabric_infra_'
+const PREFIX = 'aethon_infra_'
 
 export type InfraValues = Record<string, string>
 

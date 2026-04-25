@@ -1,6 +1,6 @@
 # API Integration Specification
 
-**Project:** Fabric — Agentic ETL, AI & Reporting Platform
+**Project:** Aethon — Agentic ETL, AI & Reporting Platform
 **Version:** 1.0.0
 **Date:** April 2026
 
@@ -44,7 +44,7 @@ anthropic-version: 2023-06-01
 ```
 
 **Error Codes:**
-| Code | Meaning | Fabric Response |
+| Code | Meaning | Aethon Response |
 |---|---|---|
 | 401 | Invalid API key | Show key error, link to Config |
 | 429 | Rate limited | Show rate limit, suggest model switch |

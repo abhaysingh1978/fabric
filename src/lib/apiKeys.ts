@@ -1,8 +1,8 @@
 const STORAGE_KEYS = {
-  anthropic: 'fabric_key_anthropic',
-  google:    'fabric_key_google',
-  openai:    'fabric_key_openai',
-  ollama:    'fabric_ollama_url',
+  anthropic: 'aethon_key_anthropic',
+  google:    'aethon_key_google',
+  openai:    'aethon_key_openai',
+  ollama:    'aethon_ollama_url',
 } as const
 
 export type ProviderKey = keyof typeof STORAGE_KEYS

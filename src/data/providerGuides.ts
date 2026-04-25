@@ -79,7 +79,7 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
           },
           {
             title: 'Create a new key',
-            body: 'Click "+ Create Key". Give it a descriptive name like "fabric-local-dev" so you can identify it later.',
+            body: 'Click "+ Create Key". Give it a descriptive name like "aethon-local-dev" so you can identify it later.',
           },
           {
             title: 'Copy the key immediately',
@@ -88,7 +88,7 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
             warn: 'Never commit this key to git or share it publicly. Anyone with the key can use your API quota.',
           },
           {
-            title: 'Paste it into Fabric',
+            title: 'Paste it into Aethon',
             body: 'Paste the key into the Anthropic field in the API Keys section above, then click Save Configuration.',
           },
         ],
@@ -129,7 +129,7 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
             code: 'AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
           },
           {
-            title: 'Paste it into Fabric',
+            title: 'Paste it into Aethon',
             body: 'Paste the key into the Google AI field in the API Keys section, then click Save Configuration.',
           },
         ],
@@ -140,7 +140,7 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
           {
             title: 'Connect a billing account',
             body: 'Go to console.cloud.google.com → select your project → Billing → Link a billing account. This unlocks Tier 2 rate limits.',
-            tip: 'Gemini 2.5 Flash on the free tier (15 RPM) is sufficient for Fabric demos. Billing is only needed for production scale.',
+            tip: 'Gemini 2.5 Flash on the free tier (15 RPM) is sufficient for Aethon demos. Billing is only needed for production scale.',
           },
           {
             title: 'Check current quotas',
@@ -153,15 +153,15 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
         steps: [
           {
             title: 'Gemini 2.5 Flash',
-            body: 'Fast, cost-efficient, great for most Fabric queries. Recommended for development and demos.',
+            body: 'Fast, cost-efficient, great for most Aethon queries. Recommended for development and demos.',
             code: 'gemini-2.5-flash',
             tip: 'Free tier supports this model at 15 requests/min.',
           },
           {
             title: 'Gemini 2.5 Pro',
-            body: 'Most capable Gemini model. Uses extended thinking for complex reasoning. Requires more tokens (set 8192+ in Fabric).',
+            body: 'Most capable Gemini model. Uses extended thinking for complex reasoning. Requires more tokens (set 8192+ in Aethon).',
             code: 'gemini-2.5-pro',
-            warn: 'Gemini 2.5 Pro is a thinking model — it consumes extra tokens for its reasoning trace. Fabric automatically allocates 8192 tokens for Pro queries.',
+            warn: 'Gemini 2.5 Pro is a thinking model — it consumes extra tokens for its reasoning trace. Aethon automatically allocates 8192 tokens for Pro queries.',
           },
         ],
       },
@@ -207,7 +207,7 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
           {
             title: 'Buy credits',
             body: 'Click "Add to credit balance". The minimum purchase is $5. Credits don\'t expire.',
-            tip: '$5–10 of credits is more than enough to run Fabric queries for weeks in development.',
+            tip: '$5–10 of credits is more than enough to run Aethon queries for weeks in development.',
           },
           {
             title: 'Set a usage limit',
@@ -224,7 +224,7 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
           },
           {
             title: 'Create a new key',
-            body: 'Click "+ Create new secret key". Give it a name like "fabric-app". Optionally scope it to a specific project.',
+            body: 'Click "+ Create new secret key". Give it a name like "aethon-app". Optionally scope it to a specific project.',
           },
           {
             title: 'Copy the key',
@@ -233,7 +233,7 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
             warn: 'After closing the dialog you cannot retrieve the key again — you\'d have to create a new one.',
           },
           {
-            title: 'Paste it into Fabric',
+            title: 'Paste it into Aethon',
             body: 'Paste the key into the OpenAI field in the API Keys section above, then click Save Configuration.',
           },
         ],
@@ -300,7 +300,7 @@ export const PROVIDER_GUIDES: ProviderGuide[] = [
             warn: 'Exposing Ollama to 0.0.0.0 without a firewall makes it accessible to your entire network. Restrict with a VPN or firewall rule.',
           },
           {
-            title: 'Set the Ollama URL in Fabric',
+            title: 'Set the Ollama URL in Aethon',
             body: 'If Ollama runs on a remote machine, update the "Ollama URL" field in the API Keys section to point to that server:',
             code: 'http://192.168.1.50:11434',
           },
